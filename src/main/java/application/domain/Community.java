@@ -14,7 +14,6 @@ public class Community extends Entity<Long> {
     private static long CURRENT_ID = 0L;
     private int socialScore;
     private int friendshipsCount;
-    private Map<User, Boolean> visited;
 
     /**
      * Class constructor for the Community.

@@ -9,8 +9,9 @@ module application.gui {
 
     opens application.gui to javafx.fxml;
     exports application.gui;
-    exports application.controller;
-    exports application.controller.exceptions;
+    exports application.gui.controller;
+    exports application.gui.controller.windows;
+    exports application.gui.controller.list;
     exports application.service;
     exports application.service.exceptions;
     exports application.repository;
@@ -18,6 +19,4 @@ module application.gui {
     exports application.domain.exceptions;
     exports application.utils;
     exports application.utils.pair;
-    exports application.controller.windows;
-    exports application.controller.list;
 }

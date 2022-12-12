@@ -26,7 +26,7 @@ public class Friendship extends Entity<DistinctPair<UUID>> {
         this.commonFriends = commonFriends;
     }
 
-    public static Friendship create(UUID user1, UUID user2, int commonFriends) {
+    public static Friendship create(UUID user1, UUID user2, int commonFriends) throws ValidationException {
         if (user1 == null) {
             throw new IllegalArgumentException("First user's identifier must not be null.");
         }

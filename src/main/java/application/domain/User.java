@@ -4,8 +4,6 @@ import application.domain.exceptions.ValidationException;
 import application.utils.Encoder;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -33,10 +31,10 @@ public class User extends Entity<UUID> {
      * @param birthDate     LocalDate, the birthdate of the User, validated
      * @param biography     String, the biography of the User, validated
      */
-    public User(UUID id, String mailAddress, String firstName, String lastName, String password,
+    public User(UUID id, MailAddress mailAddress, String firstName, String lastName, String password,
                 LocalDate registerDate, LocalDate birthDate, String biography) {
         super(id);
-        this.mailAddress = MailAddress.of(mailAddress);
+        this.mailAddress = mailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -46,70 +44,71 @@ public class User extends Entity<UUID> {
     }
 
     public static User create(String mailAddress, String firstName, String lastName, String password,
-                              LocalDate birthDate, String biography) {
+                              LocalDate birthDate, String biography) throws ValidationException {
         String error = "";
+        MailAddress mail = null;
         try {
-            MailAddress.of(mailAddress);
+            mail = MailAddress.of(mailAddress);
         }
-        catch (Exception e) {
-            error += e.getMessage() + " | ";
+        catch (ValidationException e) {
+            error += e.getMessage() + "\n";
         }
 
         if (firstName == null || firstName.equals("") || firstName.equalsIgnoreCase("null")) {
-            error += "The first name must not be null | ";
+            error += "The first name must not be null\n";
         }
         else if (firstName.length() < 2) {
-            error += "The first name is too short | ";
+            error += "The first name is too short\n";
         }
         else if (firstName.length() > 99) {
-            error += "The first name is too long | ";
+            error += "The first name is too long\n";
         }
         else if (!firstName.matches("^[A-Z][a-zA-Z-0-9]*$")) {
-            error += "The first name doesn't respect the format | ";
+            error += "The first name doesn't respect the format\n";
         }
 
         if (lastName == null || lastName.equals("") || lastName.equalsIgnoreCase("null")) {
-            error += "The last name must not be null | ";
+            error += "The last name must not be null\n";
         }
         else if (lastName.length() < 2) {
-            error += "The last name is too short | ";
+            error += "The last name is too short\n";
         }
         else if (lastName.length() > 99) {
-            error += "The last name is too long | ";
+            error += "The last name is too long\n";
         }
         else if (!lastName.matches("^([A-Z][a-zA-Z-0-9]* *)+$")) {
-            error += "The last name doesn't respect the format | ";
+            error += "The last name doesn't respect the format\n";
         }
 
         if (password == null) {
-            error += "The password shouldn't be null | ";
+            error += "The password shouldn't be null\n";
         }
         else if (password.length() < 5) {
-            error += "The password should have at least 5 characters | ";
+            error += "The password should have at least 5 characters\n";
         }
 
         if (birthDate == null) {
-            error += "The birth date must not be null | ";
+            error += "The birth date must not be null\n";
         }
         else if (birthDate.isAfter(LocalDate.now()) || birthDate.plusYears(120).isBefore(LocalDate.now())) {
-            error += "Invalid birth date | ";
+            error += "Invalid birth date\n";
         }
 
         if (biography != null && biography.length() > 100) {
-            error += "The biography is too long | ";
+            error += "The biography is too long\n";
         }
 
         if (!error.isEmpty()) {
-            throw new ValidationException(error.substring(0, error.length() - 3));
+            throw new ValidationException(error.substring(0, error.length() - 1));
         }
-        return new User(UUID.randomUUID(), mailAddress, firstName, lastName, Encoder.encode(password), LocalDate.now(), birthDate, biography);
+        return new User(UUID.randomUUID(), mail, firstName, lastName, Encoder.encode(password), LocalDate.now(), birthDate, biography);
     }
 
     /**
      * @return the email address of the User
      */
-    public String getMailAddress() {
-        return mailAddress.toString();
+    public MailAddress getMailAddress() {
+        return mailAddress;
     }
 
     /**
@@ -164,16 +163,6 @@ public class User extends Entity<UUID> {
     @Override
     public String toString() {
         return firstName + ' ' + lastName;
-    }
-
-    /**
-     * Verify if the name of the User can match with a given substring.
-     * @param subString the substring to match the name of the User
-     * @return true if the given substring matches the name of the User, false otherwise
-     */
-    public boolean match(String subString) {
-        return (firstName + ' ' + lastName).toLowerCase().contains(subString.toLowerCase())
-                || (lastName + ' ' + firstName).toLowerCase().contains(subString.toLowerCase());
     }
 
     @Override

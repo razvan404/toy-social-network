@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.domain.exceptions.ValidationException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,8 +22,8 @@ public class Friend extends User {
      * @param birthDate    LocalDate, the birthdate of the User, validated
      * @param biography    String, the biography of the User, validated
      */
-    public Friend(UUID id, String mailAddress, String firstName, String lastName, String password, LocalDate registerDate,
-                  LocalDate birthDate, String biography, LocalDateTime friendsFrom, int commonFriends) {
+    public Friend(UUID id, MailAddress mailAddress, String firstName, String lastName, String password, LocalDate registerDate,
+                  LocalDate birthDate, String biography, LocalDateTime friendsFrom, int commonFriends) throws ValidationException {
         super(id, mailAddress, firstName, lastName, password, registerDate, birthDate, biography);
         this.friendsFrom = friendsFrom;
         this.commonFriends = commonFriends;

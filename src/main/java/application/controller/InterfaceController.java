@@ -1,8 +1,6 @@
 package application.controller;
 
-import application.controller.exceptions.NoResultsException;
 import application.controller.windows.ApplicationWindow;
-import application.domain.User;
 import application.gui.SocialNetworkApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,8 +106,8 @@ public class InterfaceController extends ApplicationWindow {
         optionChanged();
         FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("profile-view.fxml"));
         AnchorPane commonFriendsPane = loader.load();
-        loader.<ProfileController>getController().setUser(userID);
-        loader.<ProfileController>getController().build();
+        loader.<OldProfileController>getController().setUser(userID);
+        loader.<OldProfileController>getController().build();
 
         setMainAnchorContent(commonFriendsPane);
     }

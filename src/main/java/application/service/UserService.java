@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.Friend;
+import application.domain.MailAddress;
 import application.domain.User;
 import application.domain.exceptions.ValidationException;
 import application.repository.UserRepository;
@@ -9,7 +10,6 @@ import application.service.exceptions.NotFoundException;
 import application.utils.Encoder;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -87,12 +87,13 @@ public class UserService extends AbstractService<UUID, User> {
      * @param newBirthDate LocalDate, the new birthdate of the User
      * @param newBiography String, the new biography of the User
      */
-    public void update(User user, String newMailAddress, String newFirstName, String newLastName, String newPassword, LocalDate newBirthDate, String newBiography) {
+    public void update(User user, String newMailAddress, String newFirstName, String newLastName, String newPassword,
+                       LocalDate newBirthDate, String newBiography) throws ValidationException {
         if (!user.getMailAddress().equals(newMailAddress) && ((UserRepository) repository).findByMail(newMailAddress).isPresent()) {
             throw new AlreadyExistsException("The update could not be done because there is already another user with the same email address.");
         }
         if (newMailAddress == null) {
-            newMailAddress = user.getMailAddress();
+            newMailAddress = user.getMailAddress().toString();
         }
         if (newFirstName == null) {
             newFirstName = user.getFirstName();
@@ -118,7 +119,7 @@ public class UserService extends AbstractService<UUID, User> {
 
         User.create(newMailAddress, newFirstName, newLastName, newPassword, newBirthDate, newBiography);
 
-        repository.update(new User(user.getID(), newMailAddress, newFirstName, newLastName, newPassword, newBirthDate, user.getRegisterDate(), newBiography))
+        repository.update(new User(user.getID(), MailAddress.of(newMailAddress), newFirstName, newLastName, newPassword, newBirthDate, user.getRegisterDate(), newBiography))
                 .orElseThrow(() -> new NotFoundException("The update could not be done because the specified user doesn't exist!"));
     }
 

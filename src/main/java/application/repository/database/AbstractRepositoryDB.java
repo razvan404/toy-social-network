@@ -92,4 +92,19 @@ public abstract class AbstractRepositoryDB<ID, E extends Entity<ID>> implements 
     public Optional<E> update(E entity) throws IllegalArgumentException {
         return Optional.empty();
     }
+
+    @Override
+    public int size() {
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+            "SELECT COUNT(*) " +
+                "FROM " + table
+            );
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException ignored) {}
+        return 0;
+    }
 }

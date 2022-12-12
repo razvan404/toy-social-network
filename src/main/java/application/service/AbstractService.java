@@ -37,4 +37,8 @@ public abstract class AbstractService<ID, E extends Entity<ID>> {
         }
         throw new NotFoundException("There is no such entity in the repository");
     }
+
+    public int size() {
+        return repository.size();
+    }
 }

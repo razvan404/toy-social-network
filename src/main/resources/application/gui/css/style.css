@@ -1,0 +1,44 @@
+.root {
+    -fx-font-family: 'Roboto';
+    -fx-font-size: 15px;
+    -fx-background-color: #fff;
+    -fx-text-fill: #333;
+}
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, #fff;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 5, 0, 0, 1.5);
+}
+.text-field:focused {
+    -fx-background-color: #fff, #f9f9f9;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 3, 0, 0, 1.5);
+}
+
+/* Fix derived prompt color for text fields */
+.text-input {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -25%);
+    -fx-font-size: 16px;
+}
+
+/* Keep prompt invisible when focused (above color fix overrides it) */
+.text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -50%);
+}
+
+/* Fix scroll bar buttons arrows colors */
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: -fx-mark-highlight-color, rgb(220, 220, 220);
+}
+
+.scroll-bar > .increment-button:hover > .increment-arrow,
+.scroll-bar > .decrement-button:hover > .decrement-arrow {
+    -fx-background-color: -fx-mark-highlight-color, rgb(240, 240, 240);
+}
+
+.scroll-bar > .increment-button:pressed > .increment-arrow,
+.scroll-bar > .decrement-button:pressed > .decrement-arrow {
+    -fx-background-color: -fx-mark-highlight-color, rgb(255, 255, 255);
+}

@@ -1,47 +1,95 @@
 .button {
-    -fx-text-fill: white;
-    -fx-background-radius: 4%;
-    -fx-border-radius: 4%;
-    -fx-padding: 5px;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 5, 0, 0, 1.5);
+    -fx-cursor: hand;
 }
 
-.button:focused {
-    -fx-opacity: 0.7;
+.login-button {
+    -fx-background-color: linear-gradient(to bottom, #7cb, #5a9);
+    -fx-opacity: 100%;
 }
 
-.backgroundVBox {
-    -fx-background-color: white;
+.login-button:hover, :focused {
+    -fx-background-color: linear-gradient(to bottom, #6ba, #498);
+}
+
+.register-button {
+    -fx-background-color: linear-gradient(to bottom, #f79, #d57);
+}
+
+.register-button:hover, :focused {
+    -fx-background-color: linear-gradient(to bottom, #e68, #c46);
+
+}
+
+.error-label {
+    -fx-fill: #e66;
+    -fx-font-weight: bold;
+}
+
+.register-text {
+    -fx-fill: #555;
+}
+
+.login-text {
+    -fx-fill: #555;
+}
+
+.date-picker:editable > .arrow-button > * {
+    -fx-opacity: 0;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-color: -fx-text-box-border, #fff;
+    -fx-background-image: url("../media/icons/register-calendar.png");
+    -fx-background-size: 60% 60%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 5, 0, 0, 1.5);
 }
 
-.mainVBox {
-    -fx-spacing: 10;
-    -fx-padding: 15px;
-    -fx-label-padding: 10px;
-    -fx-alignment: center;
-    word-break: normal;
-    overflow-wrap: break-word;
-    -fx-background-color: rgba(255, 255, 255, 0.8);
+.date-picker .cell {
+    -fx-text-fill: #222;
+}
+.date-picker .cell:hover {
+    -fx-background-color: #eee;
+}
+.date-picker .cell:focused {
+    -fx-background-color: #eee;
 }
 
-.titleField {
-    -fx-padding: 5px;
+.date-picker-popup {
+    -fx-border-color: transparent;
+    -fx-min-width: 300px;
 }
 
-.mailField {
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #7cb;
 }
 
-.passwordField{
+.date-picker-popup .month-year-pane .label {
+    -fx-text-fill: #fff;
 }
 
-.loginButton {
-    -fx-background-color: #1877F2;
+.date-picker-popup .spinner .button {
+    -fx-background-color: transparent;
 }
-.loginButton:hover {
-    -fx-background-color: #166FE5;
+
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow{
+    -fx-background-color: #fff;
 }
 
 .hyperlink {
+    -fx-text-fill: #6af;
     -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.go-to-login-h-box {
+    -fx-font-size: 17px;
 }

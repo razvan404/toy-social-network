@@ -1,0 +1,94 @@
+.background {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../media/user-background.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.7), 7, 0, 0, 3);
+}
+
+.profile-image-background {
+    -fx-background-color: #fff;
+    -fx-border-radius: 30%;
+    -fx-background-radius: 30%;
+}
+
+.user-name-text {
+    -fx-fill: #fff;
+    -fx-font-size: 40px;
+    -fx-font-weight: bolder;
+}
+
+.friends-from-text {
+    -fx-fill: #fff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.friend-list-text {
+    -fx-font-size: 18px;
+    -fx-font-weight: bolder;
+}
+
+.in-common-text {
+    -fx-font-size: 18px;
+    -fx-font-weight: bolder;
+}
+
+.info-section {
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.7), 7, 0, 0, 3);
+    -fx-background-color: #fff;
+}
+
+.description-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bolder;
+}
+
+.description-text {
+    -fx-font-size: 16px;
+    -fx-font-weight: lighter;
+}
+
+.add-friend-button {
+    -fx-background-color:
+            linear-gradient(#dd1, #8d0),
+            radial-gradient(center 50% -40%, radius 200%, #9c1 45%, #6a0 50%);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+
+    -fx-background-image: url("../media/icons/profile-add-friend.png");
+    -fx-background-size: 80% 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-cursor: hand;
+}
+
+.remove-friend-button {
+    -fx-background-color: linear-gradient(#f50, #b20);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+
+    -fx-background-image: url("../media/icons/profile-remove-friend.png");
+    -fx-background-size: 80% 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-cursor: hand;
+}
+
+.account-settings-button {
+    -fx-background-color:
+            linear-gradient(#345 0%, #222 20%, #122 100%),
+            linear-gradient(#222, #122),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114, 131, 148, 0.9), rgba(255, 255, 255, 0));
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+
+    -fx-background-image: url("../media/icons/profile-account-settings.png");
+    -fx-background-size: 80% 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-cursor: hand;
+}

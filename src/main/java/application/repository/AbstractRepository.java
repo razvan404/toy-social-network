@@ -53,4 +53,9 @@ public interface AbstractRepository<ID, E extends Entity<ID>> {
      * @throws IllegalArgumentException when one of the given arguments is null
      */
     Optional<E> update(E entity) throws IllegalArgumentException;
+
+    /**
+     * @return the number of entities in the container.
+     */
+    int size();
 }

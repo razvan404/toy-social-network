@@ -118,7 +118,7 @@ public class RegisterController extends ApplicationWindow {
                     birthDatePicker.getValue(),
                     biographyField.getText()
             );
-            networkService.login(user.getMailAddress(), user.getPassword());
+            networkService.login(user.getMailAddress().toString(), user.getPassword());
             FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("interface-view.fxml"));
             changeScene(loader.load());
         } catch (Exception e) {

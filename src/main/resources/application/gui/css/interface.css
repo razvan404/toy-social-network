@@ -1,37 +1,131 @@
-.topBar {
-    -fx-background-color: #036FC6;
+.root {
+    -fx-background-color: #fff;
 }
 
-.homeScreenButton {
+.search-bar {
+    -fx-background-color: linear-gradient(to top, #fff, #f8f6f0);
+    -fx-text-fill: #333;
+    -fx-border-color: transparent;
+    -fx-border-radius: 20px;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.5), 3, 0, 0, 2);
+    -fx-background-radius: 30px;
+    -fx-font-size: 16px;
+}
+
+.search-bar:focused {
+    -fx-border-color: transparent;
+}
+
+.search-list {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(100, 100, 100, 0.5), 6, 0, 0, 2);
+    -fx-background-radius: 0 0 5px 5px;
+}
+
+.top-section {
+    -fx-background-color: linear-gradient(to bottom, #fff, #f8f6f0);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.7), 6, 0, 0, 2);
+    -fx-background-radius: 0 0 10px 0;
+    -fx-border-radius: 0 0 10px 0;
+}
+
+.top-section .button {
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-background-size: 80% 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
 }
 
-.searchTextField {
-    -fx-background-color: rgba(0, 0, 0, 0.2);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 1), 2, 0, 1, 1);
-    -fx-text-fill: white;
+.top-section .button:hover, .top-section .button:focused {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-background-size: 80% 80%;
 }
 
-.topBarButton {
+.top-section .profile-button {
+    -fx-background-image: url("../media/icons/topbar-user.png");
+}
+
+.top-section .profile-button:hover, .top-section .profile-button:focused {
+    -fx-background-image: url("../media/icons/topbar-user-filled.png");
+}
+
+.top-section .settings-button {
+    -fx-background-image: url("../media/icons/topbar-settings.png");
+}
+
+.top-section .settings-button:hover, .top-section .settings-button:focused {
+    -fx-background-image: url("../media/icons/topbar-settings-filled.png");
+}
+
+.top-section .exit-button {
+    -fx-background-image: url("../media/icons/topbar-exit.png");
+}
+
+.top-section .exit-button:hover, .top-section .exit-button:focused {
+    -fx-background-image: url("../media/icons/topbar-exit-filled.png");
+}
+
+.home-section {
+    -fx-background-color: linear-gradient(to bottom, #fff, #f8f6f0);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.7), 6, 0, 0, 2);
+    -fx-background-radius: 0 0 0 10px;
+    -fx-border-radius: 0 0 0 10px;
+    -fx-font-size: 22px;
+}
+
+.home-section .button {
     -fx-background-color: transparent;
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 1), 4, 0, 2, 2);
-    -fx-text-fill: white;
+    -fx-text-fill: #444;
+    -fx-cursor: hand;
 }
 
-.topBarButton:hover {
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 1), 6, 0, 3, 3);
+.tool-section {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 4, 0, 1, 0);
+    -fx-background-radius: 0 10px 10px 0;
+    -fx-border-radius: 0 10px 10px 0;
 }
 
-.topBarButtonImage {
-
+.tool-section .button {
+    -fx-background-color: transparent;
+    -fx-background-size: 80% 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-text-fill: #222;
+    -fx-font-weight: lighter;
+    -fx-font-size: 14px;
 }
 
-.mainPane {
-    -fx-background-color: white;
+.tool-section .button:hover {
+    -fx-background-size: 95% 95%;
 }
 
-.searchListPane {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 1), 8, 0, 4, 4);
+.tool-section .h-box:hover, .tool-section .h-box:focused {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-cursor: hand;
+}
+
+.tool-section .menu-button {
+    -fx-background-image: url("../media/icons/toolbar-menu.png");
+}
+
+.tool-section .community-button {
+    -fx-background-image: url("../media/icons/toolbar-community.png");
+}
+
+.tool-section .friends-button {
+    -fx-background-image: url("../media/icons/toolbar-friends.png");
+}
+
+.tool-section .notifications-button {
+    -fx-background-image: url("../media/icons/toolbar-notifications.png");
+}
+
+.main-pane {
+    -fx-border-radius: 20px 0 0 0;
+    -fx-background-radius: 20px 0 0 0;
 }

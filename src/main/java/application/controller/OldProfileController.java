@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.controller.exceptions.NoResultsException;
 import application.controller.windows.ApplicationWindow;
 import application.domain.Friend;
 import application.domain.User;
@@ -21,7 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class ProfileController extends ApplicationWindow {
+public class OldProfileController extends ApplicationWindow {
     private Friend friend;
     private User user;
     @FXML

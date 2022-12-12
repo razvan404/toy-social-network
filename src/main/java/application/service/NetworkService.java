@@ -15,7 +15,7 @@ public class NetworkService extends Observable {
     public final UserService userService;
     public final FriendshipService friendshipService;
     private final CommunityService communityService;
-    private User currentUser;
+    private Friend currentUser;
 
     /**
      * Constructs a new NetworkService
@@ -101,10 +101,11 @@ public class NetworkService extends Observable {
     }
 
     public void login(String mailAddress, String password) {
-        this.currentUser = userService.getUserByMailAndPassword(mailAddress, password);
+        User user = userService.getUserByMailAndPassword(mailAddress, password);
+        currentUser = new Friend(user, null, 0);
     }
 
-    public User getCurrentUser() {
+    public Friend getCurrentUser() {
         return currentUser;
     }
 

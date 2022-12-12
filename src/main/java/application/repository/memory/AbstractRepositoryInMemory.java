@@ -76,4 +76,9 @@ public class AbstractRepositoryInMemory<ID, E extends Entity<ID>> implements Abs
         entities.put(entity.getID(), entity);
         return oldEntity;
     }
+
+    @Override
+    public int size() {
+        return entities.size();
+    }
 }

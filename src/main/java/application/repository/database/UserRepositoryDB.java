@@ -1,7 +1,9 @@
 package application.repository.database;
 
 import application.domain.Friend;
+import application.domain.MailAddress;
 import application.domain.User;
+import application.domain.exceptions.ValidationException;
 import application.repository.UserRepository;
 import application.utils.database.DataBase;
 
@@ -26,8 +28,12 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
         LocalDate registerDate = resultSet.getDate("register_date").toLocalDate();
         LocalDate birthDate = resultSet.getDate("birth_date").toLocalDate();
         String biography = resultSet.getString("biography");
-        return Optional.of(new User(id, email, firstName, lastName, password,
-                registerDate, birthDate, biography));
+        try {
+            return Optional.of(new User(id, MailAddress.of(email), firstName, lastName, password,
+                    registerDate, birthDate, biography));
+        } catch (ValidationException validationException) {
+            throw new RuntimeException(validationException);
+        }
     }
 
     public Optional<Friend> extractFriend(ResultSet resultSet) throws SQLException {
@@ -44,8 +50,12 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
             friendsFrom = resultSet.getTimestamp("friends_from").toLocalDateTime();
         }
         int commonFriends = resultSet.getInt("common_friends");
-        return Optional.of(new Friend(id, email, firstName, lastName, password,
-                registerDate, birthDate, biography, friendsFrom, commonFriends));
+        try {
+            return Optional.of(new Friend(id, MailAddress.of(email), firstName, lastName, password,
+                    registerDate, birthDate, biography, friendsFrom, commonFriends));
+        } catch (ValidationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -65,7 +75,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
         "INSERT INTO users(user_id, email, first_name, last_name, password, register_date, birth_date, biography) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         preparedStatement.setObject(1, user.getID(), Types.OTHER);
-        preparedStatement.setString(2, user.getMailAddress());
+        preparedStatement.setString(2, user.getMailAddress().toString());
         preparedStatement.setString(3, user.getFirstName());
         preparedStatement.setString(4, user.getLastName());
         preparedStatement.setString(5, user.getPassword());
@@ -90,7 +100,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
         "UPDATE users " +
             "SET email = ?, first_name = ?, last_name = ?, password = ?, register_date = ?, birth_date = ?, biography = ? " +
             "WHERE user_id = ?");
-        preparedStatement.setString(1, user.getMailAddress());
+        preparedStatement.setString(1, user.getMailAddress().toString());
         preparedStatement.setString(2, user.getFirstName());
         preparedStatement.setString(3, user.getLastName());
         preparedStatement.setString(4, user.getPassword());
@@ -183,8 +193,6 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
             preparedStatement.setObject(8, fromUserID, Types.OTHER);
             preparedStatement.setObject(9, fromUserID, Types.OTHER);
             preparedStatement.setObject(10, fromUserID, Types.OTHER);
-
-
 
             System.out.println(preparedStatement);
 
