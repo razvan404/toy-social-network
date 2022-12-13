@@ -83,8 +83,8 @@
 }
 
 .tool-section {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 4, 0, 1, 0);
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.2), 5, 0, 2, 0);
     -fx-background-radius: 0 10px 10px 0;
     -fx-border-radius: 0 10px 10px 0;
 }
@@ -105,7 +105,7 @@
 }
 
 .tool-section .h-box:hover, .tool-section .h-box:focused {
-    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.8);
     -fx-cursor: hand;
 }
 

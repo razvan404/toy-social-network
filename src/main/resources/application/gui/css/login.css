@@ -1,8 +1,21 @@
+.user-background {
+    -fx-background-image: url("../media/login-background.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.frame {
+    -fx-background-color: linear-gradient(to bottom right, #fff, #fefdfc);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.8), 15, 0, 0, 0);
+    -fx-border-radius: 40px;
+    -fx-background-radius: 40px;
+}
+
 .button {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
     -fx-text-fill: #fff;
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 5, 0, 0, 1.5);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);
     -fx-cursor: hand;
 }
 
@@ -37,6 +50,10 @@
     -fx-fill: #555;
 }
 
+.date-picker .text-field {
+    -fx-background-radius: 4px 0 0 4px;
+}
+
 .date-picker:editable > .arrow-button > * {
     -fx-opacity: 0;
 }
@@ -48,8 +65,8 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-insets: 0, 0 0 1 0;
-    -fx-background-radius: 0;
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.3), 5, 0, 0, 1.5);
+    -fx-background-radius: 0 4px 4px 0;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);
 }
 
 .date-picker .cell {
@@ -64,7 +81,7 @@
 
 .date-picker-popup {
     -fx-border-color: transparent;
-    -fx-min-width: 300px;
+    -fx-min-width: 310px;
 }
 
 .date-picker-popup .month-year-pane {

@@ -138,61 +138,59 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
             PreparedStatement preparedStatement;
             if (!fromUserID.equals(ofUserID)) {
                 preparedStatement = connection.prepareStatement(
-            "SELECT U.*, F3.friends_from AS friends_from, count(F3) AS common_friends " +
-                "FROM friendships F1 " +
-                "   INNER JOIN users U ON F1.first_user = U.user_id AND F1.second_user = ? " +
-                "   LEFT JOIN friendships F2 ON F1.first_user = F2.first_user OR F1.first_user = F2.second_user " +
-                "   LEFT JOIN friendships F3 ON (F1.first_user = F2.first_user AND F3.second_user = F2.second_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.second_user = F2.first_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, F3.friends_from " +
-                "UNION " +
-                "SELECT U.*, F3.friends_from AS friends_from, count(F3) AS common_friends " +
-                "FROM friendships F1 " +
-                "   INNER JOIN users U ON F1.second_user = U.user_id AND F1.first_user = ? " +
-                "   LEFT JOIN friendships F2 ON F1.second_user = F2.first_user OR F1.second_user = F2.second_user " +
-                "   LEFT JOIN friendships F3 ON (F1.first_user = F2.first_user AND F3.second_user = F2.second_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.second_user = F2.first_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, F3.friends_from " +
-                "ORDER BY first_name, last_name");
+                "SELECT U.*, F.friends_from AS friends_from " +
+                     "FROM ( " +
+                     "    SELECT U.*, COUNT(F2) AS common_friends " +
+                     "    FROM ( " +
+                     "        SELECT U.* " +
+                     "        FROM users U INNER JOIN friendships F on U.user_id = F.first_user " +
+                     "        WHERE F.second_user = ? " +
+                     "        UNION " +
+                     "        SELECT U.* " +
+                     "        FROM users U INNER JOIN friendships F on U.user_id = F.second_user " +
+                     "        WHERE F.first_user = ?) U " +
+                     "    INNER JOIN friendships F1 ON F1.first_user = U.user_id OR F1.second_user = U.user_id " +
+                     "    LEFT JOIN friendships F2 ON (F2.first_user = ? AND F2.second_user = F1.first_user AND F1.first_user != U.user_id) " +
+                     "                            OR (F2.second_user = ? AND F2.first_user = F1.first_user AND F1.first_user != U.user_id) " +
+                     "                            OR (F2.first_user = ? AND F2.second_user = F1.second_user AND F1.second_user != U.user_id) " +
+                     "                            OR (F2.second_user = ? AND F2.first_user = F1.second_user AND F1.second_user != U.user_id) " +
+                     "    GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography) U " +
+                     "LEFT JOIN friendships F ON (first_user = U.user_id AND second_user = ?) " +
+                     "                        OR (second_user = U.user_id AND first_user = ?) " +
+                     "ORDER BY U.first_name, U.last_name;"
+                );
+                preparedStatement.setObject(1, ofUserID, Types.OTHER);
+                preparedStatement.setObject(2, ofUserID, Types.OTHER);
+                preparedStatement.setObject(3, fromUserID, Types.OTHER);
+                preparedStatement.setObject(4, fromUserID, Types.OTHER);
+                preparedStatement.setObject(5, fromUserID, Types.OTHER);
+                preparedStatement.setObject(6, fromUserID, Types.OTHER);
+                preparedStatement.setObject(7, fromUserID, Types.OTHER);
+                preparedStatement.setObject(8, fromUserID, Types.OTHER);
             }
             else {
                 preparedStatement = connection.prepareStatement(
-            "SELECT U.*, F1.friends_from AS friends_from, count(F3) AS common_friends " +
-                "FROM friendships F1 " +
-                "   INNER JOIN users U ON F1.first_user = U.user_id AND F1.second_user = ? " +
-                "   LEFT JOIN friendships F2 ON F1.first_user = F2.first_user OR F1.first_user = F2.second_user " +
-                "   LEFT JOIN friendships F3 ON (F1.first_user = F2.first_user AND F3.second_user = F2.second_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.second_user = F2.first_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, F1.friends_from " +
-                "UNION " +
-                "SELECT U.*, F1.friends_from AS friends_from, count(F3) AS common_friends " +
-                "FROM friendships F1 " +
-                "   INNER JOIN users U ON F1.second_user = U.user_id AND F1.first_user = ? " +
-                "   LEFT JOIN friendships F2 ON F1.second_user = F2.first_user OR F1.second_user = F2.second_user " +
-                "   LEFT JOIN friendships F3 ON (F1.first_user = F2.first_user AND F3.second_user = F2.second_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.second_user = F2.first_user AND F3.first_user = ?) " +
-                "       OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
-                "       OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, F1.friends_from " +
-                "ORDER BY first_name, last_name");
+                "SELECT F.*, COUNT(F2) AS common_friends " +
+                    "FROM (SELECT U.*, F.friends_from AS friends_from " +
+                    "    FROM users U INNER JOIN friendships F on U.user_id = F.first_user " +
+                    "    WHERE F.second_user = ? " +
+                    "    UNION " +
+                    "    SELECT U.*, F.friends_from AS friends_from " +
+                    "    FROM users U INNER JOIN friendships F on U.user_id = F.second_user " +
+                    "    WHERE F.first_user = ?) F " +
+                    "LEFT JOIN friendships F1 ON F1.first_user = F.user_id OR F1.second_user = F.user_id " +
+                    "LEFT JOIN friendships F2 ON (F2.first_user = ? AND F2.second_user = F1.first_user AND F1.first_user != F.user_id) " +
+                    "                        OR (F2.second_user = ? AND F2.first_user = F1.first_user AND F1.first_user != F.user_id) " +
+                    "                        OR (F2.first_user = ? AND F2.second_user = F1.second_user AND F1.second_user != F.user_id) " +
+                    "                        OR (F2.second_user = ? AND F2.first_user = F1.second_user AND F1.second_user != F.user_id) " +
+                    "GROUP BY F.user_id, F.email, F.first_name, F.last_name, F.password, F.register_date, F.birth_date, F.biography, F.friends_from;");
+                preparedStatement.setObject(1, ofUserID);
+                preparedStatement.setObject(2, ofUserID);
+                preparedStatement.setObject(3, fromUserID);
+                preparedStatement.setObject(4, fromUserID);
+                preparedStatement.setObject(5, fromUserID);
+                preparedStatement.setObject(6, fromUserID);
             }
-
-            preparedStatement.setObject(1, ofUserID, Types.OTHER);
-            preparedStatement.setObject(2, fromUserID, Types.OTHER);
-            preparedStatement.setObject(3, fromUserID, Types.OTHER);
-            preparedStatement.setObject(4, fromUserID, Types.OTHER);
-            preparedStatement.setObject(5, fromUserID, Types.OTHER);
-            preparedStatement.setObject(6, ofUserID, Types.OTHER);
-            preparedStatement.setObject(7, fromUserID, Types.OTHER);
-            preparedStatement.setObject(8, fromUserID, Types.OTHER);
-            preparedStatement.setObject(9, fromUserID, Types.OTHER);
-            preparedStatement.setObject(10, fromUserID, Types.OTHER);
 
             System.out.println(preparedStatement);
 
@@ -268,44 +266,27 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
         List<Friend> friends = new ArrayList<>();
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
-            "SELECT U.*, F1.friends_from AS friends_from, count(F3) AS common_friends " +
-                 "FROM users U " +
-                 "    INNER JOIN friendships F ON (F.first_user = user_id AND F.second_user = ?) " +
-                 "      OR (F.second_user = user_id AND F.first_user = ?) " +
-                 "    INNER JOIN friendships F1 ON F1.first_user = user_id AND F1.second_user = ? " +
-                 "    INNER JOIN friendships F2 ON F1.first_user = F2.first_user OR F1.first_user = F2.second_user " +
-                 "    INNER JOIN friendships F3 ON (F1.first_user = F2.first_user AND F3.second_user = F2.second_user AND F3.first_user = ?) " +
-                 "      OR (F1.first_user = F2.second_user AND F3.second_user = F2.first_user AND F3.first_user = ?) " +
-                 "      OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
-                 "      OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
-                 "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography , F1.friends_from UNION " +
-                 "SELECT U.*, F1.friends_from AS friends_from, count(F3.first_user) AS common_friends " +
-                 "FROM users U " +
-                 "    INNER JOIN friendships F ON (F.first_user = user_id AND F.second_user = ?) " +
-                 "      OR (F.second_user = user_id AND F.first_user = ?) " +
-                 "    INNER JOIN friendships F1 ON F1.second_user = user_id AND F1.first_user = ? " +
-                 "    INNER JOIN friendships F2 ON F1.second_user = F2.first_user OR F1.second_user = F2.second_user " +
-                 "    INNER JOIN friendships F3 ON (F1.first_user = F2.first_user AND F3.second_user = F2.second_user AND F3.first_user = ?) " +
-                 "      OR (F1.first_user = F2.second_user AND F3.second_user = F2.first_user AND F3.first_user = ?) " +
-                 "      OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
-                 "      OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
-                 "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography , F1.friends_from");
+            "SELECT U.*, COUNT(F2) AS common_friends " +
+                "FROM (SELECT U.*, F2.friends_from " +
+                "      FROM users U " +
+                "        INNER JOIN friendships F1 ON (F1.first_user = U.user_id AND F1.second_user = ?) " +
+                "                                OR (F1.second_user = U.user_id AND F1.first_user = ?) " +
+                "        INNER JOIN friendships F2 ON (F2.first_user = U.user_id AND F2.second_user = ?) " +
+                "                                OR (F2.second_user = U.user_id AND F2.first_user = ?)) U " +
+                "    INNER JOIN friendships F1 ON (F1.first_user = U.user_id OR F1.second_user = U.user_id) " +
+                "                            AND F1.first_user != ? AND F1.second_user != ? " +
+                "    LEFT JOIN friendships F2 ON ((F2.second_user = F1.first_user OR F2.second_user = F1.second_user) AND F2.first_user = ?) " +
+                "                            OR ((F2.first_user = F1.first_user OR F2.first_user = F1.second_user) AND F2.second_user = ?) " +
+                "GROUP BY U.user_id, U.email, U.first_name, U.last_name, U.password, U.register_date, U.birth_date, U.biography, U.friends_from");
 
-            preparedStatement.setObject(1, withUserID, Types.OTHER);
-            preparedStatement.setObject(2, withUserID, Types.OTHER);
-            preparedStatement.setObject(3, fromUserID, Types.OTHER);
-            preparedStatement.setObject(4, fromUserID, Types.OTHER);
+            preparedStatement.setObject(1, fromUserID, Types.OTHER);
+            preparedStatement.setObject(2, fromUserID, Types.OTHER);
+            preparedStatement.setObject(3, withUserID, Types.OTHER);
+            preparedStatement.setObject(4, withUserID, Types.OTHER);
             preparedStatement.setObject(5, fromUserID, Types.OTHER);
             preparedStatement.setObject(6, fromUserID, Types.OTHER);
             preparedStatement.setObject(7, fromUserID, Types.OTHER);
-
-            preparedStatement.setObject(8, withUserID, Types.OTHER);
-            preparedStatement.setObject(9, withUserID, Types.OTHER);
-            preparedStatement.setObject(10, fromUserID, Types.OTHER);
-            preparedStatement.setObject(11, fromUserID, Types.OTHER);
-            preparedStatement.setObject(12, fromUserID, Types.OTHER);
-            preparedStatement.setObject(13, fromUserID, Types.OTHER);
-            preparedStatement.setObject(14, fromUserID, Types.OTHER);
+            preparedStatement.setObject(8, fromUserID, Types.OTHER);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

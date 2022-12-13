@@ -4,6 +4,12 @@
     -fx-font-weight: bold;
 }
 
+.zoop {
+    -fx-fill: #fff;
+    -fx-font-size: 55px;
+    -fx-font-weight: bold;
+}
+
 .count {
     -fx-fill: #fff;
     -fx-font-size: 45px;
@@ -16,22 +22,33 @@
     -fx-font-weight: bolder;
 }
 
+.user-background {
+    -fx-background-image: url("../media/home-background.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.frame {
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.6), 10, 0, 0, 0);
+}
+
 .users-info-section {
-    -fx-background-color: linear-gradient(to bottom right, #b0f, #90d);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.6), 7, 0, 0, 3);
+    -fx-background-color: linear-gradient(to bottom right, #b0f, #60a);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(187, 0, 255, 0.8), 9, 0, 0, 7);
 }
 
 .friendships-info-section {
-    -fx-background-color: linear-gradient(to bottom right, #0c0, #0a0);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.6), 7, 0, 0, 3);
+    -fx-background-color: linear-gradient(to bottom right, #0c0, #080);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 204, 0, 0.8), 9, 0, 0, 7);
 }
 
 .tsn-info-section {
-    -fx-background-color: linear-gradient(to bottom right, #08e, #06c);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.6), 7, 0, 0, 3);
+    -fx-background-color: linear-gradient(to bottom right, #08e, #04a);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 136, 238, 0.8), 9, 0, 0, 7);
 }
 
 .contact-section {
-    -fx-background-color: linear-gradient(to bottom right, #f80, #d60);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.6), 7, 0, 0, 3);
+    -fx-background-color: linear-gradient(to bottom right, #f80, #b40);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(255, 136, 0, 0.8), 9, 0, 0, 7);
 }

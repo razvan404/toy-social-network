@@ -62,7 +62,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#handleProfileButton" prefHeight="50.0" prefWidth="50.0" styleClass="profile-button" />
                   <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="settings-button" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="exit-button" />
+                  <Button fx:id="handleSignOutButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="exit-button" />
                </children>
             </HBox>
          </children>
@@ -71,7 +71,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="50.0" prefWidth="200.0" text="TOP G" />
+                  <Button mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="50.0" prefWidth="200.0" text="Zoop!" />
                </children>
             </HBox>
          </children>

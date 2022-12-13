@@ -1,11 +1,16 @@
 .background {
+    -fx-background-image: url("../media/profile-background.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.user-background {
     -fx-background-color: transparent;
     -fx-background-image: url("../media/user-background.png");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-insets: 0, 0 0 1 0;
-    -fx-background-radius: 0;
     -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.7), 7, 0, 0, 3);
 }
 

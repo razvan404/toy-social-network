@@ -11,11 +11,11 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.ProfileController">
+<AnchorPane prefHeight="550.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.ProfileController">
    <children>
-      <VBox alignment="CENTER" fillWidth="false" layoutX="75.0" prefHeight="550.0" prefWidth="650.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+      <VBox alignment="CENTER" fillWidth="false" layoutX="75.0" prefHeight="465.0" prefWidth="800.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
-            <AnchorPane prefHeight="230.0" prefWidth="650.0" styleClass="background" VBox.vgrow="NEVER">
+            <AnchorPane prefHeight="230.0" prefWidth="650.0" styleClass="user-background" VBox.vgrow="NEVER">
                <children>
                   <AnchorPane prefHeight="120.0" prefWidth="120.0" styleClass="profile-image-background" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
                      <children>
@@ -31,11 +31,11 @@
                   <Button fx:id="profileButton" layoutX="586.0" layoutY="163.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="account-settings-button" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
-            <HBox alignment="TOP_CENTER" prefHeight="290.0" prefWidth="650.0" spacing="10.0" VBox.vgrow="ALWAYS">
+            <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="290.0" prefWidth="650.0" spacing="10.0">
                <children>
                   <HBox fillHeight="false">
                      <children>
-                        <AnchorPane prefHeight="230.0" prefWidth="240.0" styleClass="info-section">
+                        <AnchorPane prefHeight="255.0" prefWidth="240.0" styleClass="info-section">
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                  <children>
@@ -57,7 +57,7 @@
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <AnchorPane prefHeight="280.0" prefWidth="400.0" styleClass="info-section" HBox.hgrow="ALWAYS">
+                  <AnchorPane prefHeight="255.0" prefWidth="400.0" styleClass="info-section" HBox.hgrow="NEVER">
                      <children>
                         <Text fx:id="friendsText" layoutX="5.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friend-list-text" text="FRIENDS" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
                         <Text fx:id="inCommonText" layoutX="216.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friend-list-text" text="IN COMMON (XYZT)" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="11.0" />

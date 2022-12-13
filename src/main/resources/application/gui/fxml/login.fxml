@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
@@ -12,30 +13,38 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.LoginController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.LoginController">
    <children>
-      <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="15.0" stylesheets="@../css/login.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" fillWidth="false" styleClass="user-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="250.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../media/logo.png" />
-               </image>
-            </ImageView>
-            <TextField fx:id="mailField" prefHeight="30.0" prefWidth="220.0" promptText="Mail address" />
-            <PasswordField fx:id="passwordField" prefHeight="30.0" prefWidth="220.0" promptText="Password" />
-            <Button mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="43.0" prefWidth="220.0" styleClass="login-button" text="Log in" textAlignment="CENTER" />
-            <TextFlow prefHeight="20.0" prefWidth="250.0" styleClass="error-text" textAlignment="CENTER">
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="450.0" prefWidth="300.0" spacing="15.0" styleClass="frame">
                <children>
-                  <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-label" text="Log in error text" />
+                  <ImageView fitHeight="250.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../media/title.png" />
+                     </image>
+                  </ImageView>
+                  <TextFlow prefHeight="20.0" prefWidth="250.0" styleClass="error-text" textAlignment="CENTER">
+                     <children>
+                        <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-label" text="Log in error text" />
+                     </children>
+                  </TextFlow>
+                  <TextField fx:id="mailField" prefHeight="35.0" prefWidth="220.0" promptText="Mail address" />
+                  <PasswordField fx:id="passwordField" prefHeight="35.0" prefWidth="220.0" promptText="Password" />
+                  <Button mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="44.0" prefWidth="220.0" styleClass="login-button" text="Log in" textAlignment="CENTER" />
+                  <HBox alignment="CENTER" prefHeight="27.0" prefWidth="220.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="register-text" text="Need an account?" />
+                        <Hyperlink onAction="#handleRegisterHyperlink" prefHeight="29.0" prefWidth="69.0" text="Sign up!" />
+                     </children>
+                  </HBox>
                </children>
-            </TextFlow>
-            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="220.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="register-text" text="Need an account?" />
-                  <Hyperlink onAction="#handleRegisterHyperlink" prefHeight="29.0" prefWidth="69.0" text="Sign up!" />
-               </children>
-            </HBox>
+            </VBox>
          </children>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@../css/style.css" />
+      <URL value="@../css/login.css" />
+   </stylesheets>
 </AnchorPane>

@@ -71,6 +71,11 @@ public class InterfaceController extends InterfaceWindow {
         showUserProfile(networkService.getCurrentUser());
     }
 
+    public void handleSignOutButton() throws IOException {
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/login.fxml"));
+        changeScene(loader.load());
+    }
+
     public void handleMenuButton() throws IOException {
         if (!isToolBarExtended) {
             Animations.changeWidthTransition(toolBar, 50, 200).play();

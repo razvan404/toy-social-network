@@ -17,7 +17,7 @@ public abstract class ApplicationWindow {
     public static void setApplicationStage(Stage applicationStage) {
         ApplicationWindow.applicationStage = applicationStage;
         ApplicationWindow.applicationStage.getIcons().setAll(Constants.APP_ICON);
-        ApplicationWindow.applicationStage.setTitle("Toy Social Network");
+        ApplicationWindow.applicationStage.setTitle("Zoop!");
         ApplicationWindow.applicationStage.setMinWidth(800);
         ApplicationWindow.applicationStage.setMinHeight(600);
     }
