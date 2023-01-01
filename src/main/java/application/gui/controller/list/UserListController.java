@@ -1,6 +1,6 @@
 package application.gui.controller.list;
 
-import application.domain.Friend;
+import application.model.Friend;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 

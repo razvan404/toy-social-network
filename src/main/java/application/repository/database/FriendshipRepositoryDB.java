@@ -1,6 +1,6 @@
 package application.repository.database;
 
-import application.domain.Friendship;
+import application.model.Friendship;
 import application.utils.pair.DistinctPair;
 import application.repository.FriendshipRepository;
 import application.utils.database.DataBase;
@@ -24,7 +24,7 @@ public class FriendshipRepositoryDB extends AbstractRepositoryDB<DistinctPair<UU
                 resultSet.getObject("first_user", UUID.class),
                 resultSet.getObject("second_user", UUID.class),
                 LocalDateTime.ofInstant(resultSet.getTimestamp("friends_from").toInstant(),
-                        TimeZone.getDefault().toZoneId()), resultSet.getInt("common_friends")));
+                        TimeZone.getDefault().toZoneId())));
     }
 
     @Override

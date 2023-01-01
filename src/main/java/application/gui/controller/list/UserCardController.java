@@ -1,8 +1,9 @@
 package application.gui.controller.list;
 
-import application.domain.Friend;
+import application.model.Friend;
 import application.utils.Constants;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -27,6 +28,7 @@ public class UserCardController extends AbstractCardController<Friend> {
     @Override
     public void build() {
         userNameText.setText(friend.getName());
+        userPhoto.setImage(friend.getAvatar().getPhoto());
         if (friend.getFriendsFrom() != null) {
             friendsFromText.setText("Friends from: " + friend.getFriendsFrom().format(Constants.DATE_FORMATTER));
         }
@@ -43,5 +45,10 @@ public class UserCardController extends AbstractCardController<Friend> {
 
     public void handleElementClicked() throws IOException {
         interfaceController.showUserProfile(friend);
+    }
+
+    @Override
+    public void refresh() throws IOException {
+        build();
     }
 }

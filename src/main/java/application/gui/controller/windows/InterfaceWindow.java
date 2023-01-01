@@ -9,10 +9,15 @@ public abstract class InterfaceWindow extends ApplicationWindow {
     @FXML
     protected static AnchorPane mainPane;
     protected static InterfaceController interfaceController;
+    protected static InterfaceWindow currentInterfaceWindow;
 
     public static void setInterfaceController(InterfaceController interfaceController) {
         InterfaceWindow.interfaceController = interfaceController;
         InterfaceWindow.mainPane = interfaceController.mainSection;
+    }
+
+    public static void setCurrentInterfaceWindow(InterfaceWindow interfaceWindow) {
+        currentInterfaceWindow = interfaceWindow;
     }
 
     public static void setMainPaneContent(Node content) {

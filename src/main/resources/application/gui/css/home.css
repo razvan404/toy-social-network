@@ -1,29 +1,29 @@
 .title {
     -fx-fill: #fff;
     -fx-font-size: 25px;
-    -fx-font-weight: bold;
+    -fx-font-weight: bolder;
 }
 
-.zoop {
+.chatter {
     -fx-fill: #fff;
-    -fx-font-size: 55px;
-    -fx-font-weight: bold;
+    -fx-font-size: 35px;
+    -fx-font-weight: bolder;
 }
 
 .count {
     -fx-fill: #fff;
     -fx-font-size: 45px;
-    -fx-font-weight: bolder;
+    -fx-font-weight: bold;
 }
 
 .content {
     -fx-fill: #fff;
     -fx-font-size: 20px;
-    -fx-font-weight: bolder;
+    -fx-font-weight: bold;
 }
 
-.user-background {
-    -fx-background-image: url("../media/home-background.png");
+.background {
+    -fx-background-image: url("../media/backgrounds/home-background.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
@@ -34,21 +34,19 @@
 }
 
 .users-info-section {
-    -fx-background-color: linear-gradient(to bottom right, #b0f, #60a);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(187, 0, 255, 0.8), 9, 0, 0, 7);
+    /*-fx-background-color: linear-gradient(to bottom right, #b0f, #60a);*/
+    -fx-background-color: linear-gradient(to bottom right, #d00, #dd0);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.8), 5, 0, 0, 3);
 }
 
 .friendships-info-section {
-    -fx-background-color: linear-gradient(to bottom right, #0c0, #080);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 204, 0, 0.8), 9, 0, 0, 7);
+    /*-fx-background-color: linear-gradient(to bottom right, #f80, #b40);*/
+    -fx-background-color: linear-gradient(to bottom right, #0d0, #0dd);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.8), 5, 0, 0, 3);
 }
 
-.tsn-info-section {
-    -fx-background-color: linear-gradient(to bottom right, #08e, #04a);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 136, 238, 0.8), 9, 0, 0, 7);
-}
-
-.contact-section {
-    -fx-background-color: linear-gradient(to bottom right, #f80, #b40);
-    -fx-effect: dropshadow(GAUSSIAN, rgba(255, 136, 0, 0.8), 9, 0, 0, 7);
+.chatter-info-section {
+    /*-fx-background-color: linear-gradient(to bottom right, #0c0, #080);*/
+    -fx-background-color: linear-gradient(to bottom right, #00d, #d0d);
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.8), 5, 0, 0, 3);
 }

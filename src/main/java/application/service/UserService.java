@@ -1,9 +1,10 @@
 package application.service;
 
-import application.domain.Friend;
-import application.domain.MailAddress;
-import application.domain.User;
-import application.domain.exceptions.ValidationException;
+import application.model.Avatar;
+import application.model.Friend;
+import application.model.MailAddress;
+import application.model.User;
+import application.model.exceptions.ValidationException;
 import application.repository.UserRepository;
 import application.service.exceptions.AlreadyExistsException;
 import application.service.exceptions.NotFoundException;
@@ -16,13 +17,14 @@ import java.util.UUID;
 /**
  * The class <b>UserService</b> is used to manipulate data from UserRepository.
  */
-public class UserService extends AbstractService<UUID, User> {
+public class UserService {
+    private final UserRepository repository;
     /**
      * Constructs a new UserService
      * @param repository the repository associated with the service
      */
     public UserService(UserRepository repository) {
-        super(repository);
+        this.repository = repository;
     }
 
     /**
@@ -32,20 +34,18 @@ public class UserService extends AbstractService<UUID, User> {
      * @return first 10 Users that contains the substring given as a parameter
      */
     public List<Friend> findByName(UUID fromUser, String subString) {
-        return ((UserRepository) repository).findByName(fromUser, subString);
+        return repository.findByName(fromUser, subString);
     }
 
     public List<Friend> findCommonFriends(UUID fromUser, UUID withUser) {
-        return ((UserRepository) repository).findCommonFriends(fromUser, withUser);
+        return repository.findCommonFriends(fromUser, withUser);
     }
 
     public List<Friend> findFriendsOf(UUID fromUser, UUID withUser) {
-        List<Friend> friends = ((UserRepository) repository).findFriendsOf(fromUser, withUser);
-        System.out.println(friends);
-        return friends;
+        return repository.findFriendsOf(fromUser, withUser);
     }
     public Friend findFriend(UUID fromUser, UUID friendID) {
-        return ((UserRepository) repository).findFriend(fromUser, friendID).orElseThrow(() -> new NotFoundException("There is no user with given identifier!"));
+        return repository.findFriend(fromUser, friendID).orElseThrow(() -> new NotFoundException("There is no user with given identifier!"));
     }
 
     /**
@@ -56,11 +56,11 @@ public class UserService extends AbstractService<UUID, User> {
      * @throws AlreadyExistsException when there is already another User with the same email / identifier
      * @throws ValidationException when the data about the User is invalid
      */
-    public User save(String email, String firstName, String lastName, String password, LocalDate birthDate, String biography) throws AlreadyExistsException, ValidationException {
-        if (((UserRepository) repository).findByMail(email).isPresent())  {
+    public User save(String email, String firstName, String lastName, String password, LocalDate birthDate) throws AlreadyExistsException, ValidationException {
+        if (repository.findByMail(email).isPresent())  {
             throw new AlreadyExistsException("The save could not be done because there is already a user with the same email address.");
         }
-        User toSave = User.create(email, firstName, lastName, password, birthDate, biography);
+        User toSave = User.create(email, firstName, lastName, password, birthDate, null, null);
         if (repository.save(toSave).isPresent()) {
             throw new AlreadyExistsException("The save could not be done because there is already one user with the same identifier!");
         }
@@ -88,20 +88,20 @@ public class UserService extends AbstractService<UUID, User> {
      * @param newBiography String, the new biography of the User
      */
     public void update(User user, String newMailAddress, String newFirstName, String newLastName, String newPassword,
-                       LocalDate newBirthDate, String newBiography) throws ValidationException {
-        if (!user.getMailAddress().equals(newMailAddress) && ((UserRepository) repository).findByMail(newMailAddress).isPresent()) {
+                       LocalDate newBirthDate, String newBiography, Avatar newAvatar) throws ValidationException, AlreadyExistsException {
+        if (!user.getMailAddress().toString().equals(newMailAddress) && repository.findByMail(newMailAddress).isPresent()) {
             throw new AlreadyExistsException("The update could not be done because there is already another user with the same email address.");
         }
-        if (newMailAddress == null) {
+        if (newMailAddress == null || newMailAddress.equals("")) {
             newMailAddress = user.getMailAddress().toString();
         }
-        if (newFirstName == null) {
+        if (newFirstName == null || newFirstName.equals("")) {
             newFirstName = user.getFirstName();
         }
-        if (newLastName == null) {
+        if (newLastName == null || newLastName.equals("")) {
             newLastName = user.getLastName();
         }
-        if (newPassword == null) {
+        if (newPassword == null || newPassword.equals("")) {
             newPassword = user.getPassword();
         }
         else {
@@ -113,26 +113,33 @@ public class UserService extends AbstractService<UUID, User> {
         if (newBirthDate == null) {
             newBirthDate = user.getBirthDate();
         }
-        if (newBiography == null) {
+        if (newBiography == null || newBiography.equals("")) {
             newBiography = user.getBiography();
         }
 
-        User.create(newMailAddress, newFirstName, newLastName, newPassword, newBirthDate, newBiography);
+        if (newAvatar == null) {
+            newAvatar = user.getAvatar();
+        }
 
-        repository.update(new User(user.getID(), MailAddress.of(newMailAddress), newFirstName, newLastName, newPassword, newBirthDate, user.getRegisterDate(), newBiography))
+        User.create(newMailAddress, newFirstName, newLastName, newPassword, newBirthDate, newBiography, newAvatar);
+
+        repository.update(new User(user.getID(), MailAddress.of(newMailAddress), newFirstName, newLastName, newPassword, newBirthDate, user.getRegisterDate(), newBiography, newAvatar))
                 .orElseThrow(() -> new NotFoundException("The update could not be done because the specified user doesn't exist!"));
     }
 
-    @Override
     public User find(UUID id) {
         return repository.find(id).orElseThrow(() -> new NotFoundException("There is no user with the given identifier!"));
     }
 
     public User getUserByMailAndPassword(String mailAddress, String password) {
-        User user = ((UserRepository) repository).findByMail(mailAddress).orElseThrow(() -> new NotFoundException("Invalid mail address / password"));
+        User user = repository.findByMail(mailAddress).orElseThrow(() -> new NotFoundException("Invalid mail address / password"));
         if (user.getPassword().equals(Encoder.encode(password))) {
             return user;
         }
         throw new NotFoundException("Invalid mail address / password");
+    }
+
+    public int size() {
+        return repository.size();
     }
 }

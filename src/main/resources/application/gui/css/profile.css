@@ -1,15 +1,15 @@
 .background {
-    -fx-background-image: url("../media/profile-background.png");
+    -fx-background-image: url("../media/backgrounds/profile-background.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
 
 .user-background {
     -fx-background-color: transparent;
-    -fx-background-image: url("../media/user-background.png");
+    -fx-background-image: url("../media/backgrounds/user-background.png");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
+    -fx-background-position: center;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.7), 7, 0, 0, 3);
 }
@@ -21,12 +21,14 @@
 }
 
 .user-name-text {
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.8), 5, 0, 2, 2);
     -fx-fill: #fff;
     -fx-font-size: 40px;
     -fx-font-weight: bolder;
 }
 
 .friends-from-text {
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.8), 5, 0, 2, 2);
     -fx-fill: #fff;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -59,41 +61,59 @@
 
 .add-friend-button {
     -fx-background-color:
-            linear-gradient(#dd1, #8d0),
-            radial-gradient(center 50% -40%, radius 200%, #9c1 45%, #6a0 50%);
+            linear-gradient(#fff, #aaa),
+            radial-gradient(center 50% -40%, radius 200%, #ddd 45%, #bbb 50%);
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
     -fx-background-image: url("../media/icons/profile-add-friend.png");
-    -fx-background-size: 80% 80%;
+    -fx-background-size: auto 80%;
+    -fx-background-position: right 6px center;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
-    -fx-cursor: hand;
+
+    -fx-text-fill: #222;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 6px;
 }
 
 .remove-friend-button {
-    -fx-background-color: linear-gradient(#f50, #b20);
+    -fx-background-color: linear-gradient(#ccc, #999);
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
     -fx-background-image: url("../media/icons/profile-remove-friend.png");
-    -fx-background-size: 80% 80%;
+    -fx-background-size: auto 80%;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
+    -fx-background-position: right 6px center;
     -fx-cursor: hand;
+
+    -fx-text-fill: #222;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 6px;
 }
 
 .account-settings-button {
     -fx-background-color:
-            linear-gradient(#345 0%, #222 20%, #122 100%),
-            linear-gradient(#222, #122),
-            radial-gradient(center 50% 0%, radius 100%, rgba(114, 131, 148, 0.9), rgba(255, 255, 255, 0));
+            linear-gradient(#333 0%, #222 20%, #111 100%),
+            linear-gradient(#222, #111),
+            radial-gradient(center 50% 0%, radius 100%, rgba(120, 120, 120, 0.9), rgba(255, 255, 255, 0));
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
     -fx-background-image: url("../media/icons/profile-account-settings.png");
-    -fx-background-size: 80% 80%;
+    -fx-background-size: auto 80%;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
+    -fx-background-position: right 6px center;
+
+    -fx-text-fill: #fff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 6px;
+
     -fx-cursor: hand;
 }

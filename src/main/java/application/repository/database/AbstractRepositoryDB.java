@@ -1,6 +1,6 @@
 package application.repository.database;
 
-import application.domain.Entity;
+import application.model.Entity;
 import application.repository.AbstractRepository;
 import application.utils.database.DataBase;
 
@@ -91,6 +91,7 @@ public abstract class AbstractRepositoryDB<ID, E extends Entity<ID>> implements 
     @Override
     public Optional<E> update(E entity) throws IllegalArgumentException {
         return Optional.empty();
+
     }
 
     @Override

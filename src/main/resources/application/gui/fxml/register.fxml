@@ -16,13 +16,13 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.RegisterController">
    <children>
-      <VBox alignment="CENTER" fillWidth="false" styleClass="user-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" fillWidth="false" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="CENTER" fillWidth="false" prefHeight="550.0" prefWidth="380.0" spacing="10.0" styleClass="frame">
+            <VBox fx:id="frameBox" alignment="CENTER" fillWidth="false" prefHeight="550.0" prefWidth="380.0" spacing="10.0" styleClass="frame">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../media/title.png" />
+                        <Image url="@../media/chatter.png" />
                      </image>
                   </ImageView>
                   <TextFlow prefHeight="18.0" prefWidth="350.0" styleClass="error-text" textAlignment="CENTER">
@@ -30,20 +30,42 @@
                         <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-label" text="Sign up error text" />
                      </children>
                   </TextFlow>
-                  <HBox alignment="CENTER" fillHeight="false" prefHeight="35.0" prefWidth="310.0" spacing="10.0">
+                  <AnchorPane>
                      <children>
-                        <TextField fx:id="firstNameField" prefHeight="35.0" prefWidth="150.0" promptText="First name" />
-                        <TextField fx:id="lastNameField" prefHeight="35.0" prefWidth="150.0" promptText="Last name" />
+                        <HBox alignment="CENTER" fillHeight="false" layoutX="5.0" layoutY="3.0" prefHeight="35.0" prefWidth="310.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TextField fx:id="firstNameField" prefHeight="35.0" prefWidth="150.0" />
+                              <TextField fx:id="lastNameField" prefHeight="35.0" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="prompt-text" text="First name" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="-10.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="prompt-text" text="Last name" AnchorPane.leftAnchor="165.0" AnchorPane.topAnchor="-10.0" />
                      </children>
-                  </HBox>
-                  <TextField fx:id="mailAddressField" prefHeight="35.0" prefWidth="310.0" promptText="Mail address" />
-                  <HBox fillHeight="false" prefHeight="35.0" prefWidth="310.0" spacing="10.0">
+                  </AnchorPane>
+                  <AnchorPane>
                      <children>
-                        <PasswordField fx:id="passwordField" prefHeight="35.0" prefWidth="150.0" promptText="Password" />
-                        <PasswordField fx:id="confirmPasswordField" prefHeight="35.0" prefWidth="150.0" promptText="Confirm password" />
+                        <TextField fx:id="mailAddressField" layoutX="5.0" layoutY="3.0" prefHeight="35.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="prompt-text" text="Mail address" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="-10.0" />
                      </children>
-                  </HBox>
-                  <DatePicker fx:id="birthDatePicker" prefHeight="35.0" prefWidth="310.0" promptText="Birth date" styleClass="date-picker-text-field" />
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <HBox fillHeight="false" layoutX="5.0" layoutY="3.0" prefHeight="35.0" prefWidth="310.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <PasswordField fx:id="passwordField" prefHeight="35.0" prefWidth="150.0" />
+                              <PasswordField fx:id="confirmPasswordField" prefHeight="35.0" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="prompt-text" text="Password" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="-10.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="prompt-text" text="Confirm password" AnchorPane.leftAnchor="165.0" AnchorPane.topAnchor="-10.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <DatePicker fx:id="birthDatePicker" layoutX="5.0" layoutY="3.0" prefHeight="35.0" prefWidth="310.0" styleClass="date-picker-text-field" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="prompt-text" text="Birth date" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="-10.0" />
+                     </children>
+                  </AnchorPane>
                   <Button mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="44.0" prefWidth="310.0" styleClass="register-button" text="Sign up" textAlignment="CENTER" />
                   <HBox alignment="CENTER" prefHeight="32.0" prefWidth="300.0" styleClass="go-to-login-h-box">
                      <children>

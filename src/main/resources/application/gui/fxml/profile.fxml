@@ -6,32 +6,37 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="550.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.ProfileController">
+<AnchorPane fx:id="backgroundPane" prefHeight="550.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.ProfileController">
    <children>
       <VBox alignment="CENTER" fillWidth="false" layoutX="75.0" prefHeight="465.0" prefWidth="800.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
-            <AnchorPane prefHeight="230.0" prefWidth="650.0" styleClass="user-background" VBox.vgrow="NEVER">
+            <AnchorPane prefHeight="218.0" prefWidth="580.0" styleClass="user-background" VBox.vgrow="NEVER">
                <children>
                   <AnchorPane prefHeight="120.0" prefWidth="120.0" styleClass="profile-image-background" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
                      <children>
-                        <ImageView fitHeight="120.0" fitWidth="120.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ImageView fx:id="profileImage" fitHeight="120.0" fitWidth="120.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <image>
                               <Image url="@../media/avatars/capybara.png" />
                            </image>
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <Text fx:id="userNameText" layoutX="158.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user-name-text" text="USER NAME" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="160.0" />
-                  <Text fx:id="friendsFromText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friends-from-text" text="Friends from: DD/MM/YYYY HH:MM:SS" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="160.0" />
-                  <Button fx:id="profileButton" layoutX="586.0" layoutY="163.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="account-settings-button" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <FlowPane layoutX="157.0" layoutY="94.0" prefHeight="120.0" prefWidth="410.0">
+                     <children>
+                        <Text fx:id="userNameText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user-name-text" text="USER NAME" />
+                        <Text fx:id="friendsFromText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friends-from-text" text="Friends from: DD MMMM YYYY, HH:MM:SS" />
+                     </children>
+                  </FlowPane>
+                  <Button fx:id="profileButton" layoutX="546.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="40.0" prefWidth="150.0" styleClass="account-settings-button" text="Profile settings" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
-            <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="290.0" prefWidth="650.0" spacing="10.0">
+            <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="284.0" prefWidth="580.0" spacing="10.0">
                <children>
                   <HBox fillHeight="false">
                      <children>
@@ -57,15 +62,15 @@
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <AnchorPane prefHeight="255.0" prefWidth="400.0" styleClass="info-section" HBox.hgrow="NEVER">
+                  <AnchorPane prefHeight="255.0" prefWidth="360.0" styleClass="info-section" HBox.hgrow="NEVER">
                      <children>
-                        <Text fx:id="friendsText" layoutX="5.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friend-list-text" text="FRIENDS" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                        <Text fx:id="inCommonText" layoutX="216.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friend-list-text" text="IN COMMON (XYZT)" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="11.0" />
-                        <AnchorPane layoutY="32.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
+                        <Text fx:id="friendsText" layoutX="5.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friend-list-text" text="FRIENDS" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="9.0" />
+                        <Text fx:id="inCommonText" layoutX="84.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="friend-list-text" text="(XYZT in common)" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="8.0" />
+                        <AnchorPane layoutX="21.0" layoutY="32.0" prefHeight="200.0" prefWidth="344.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
                            <children>
                               <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="240.0" prefWidth="390.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <content>
-                                    <AnchorPane fx:id="friendsPane" prefHeight="236.0" prefWidth="360.0" />
+                                    <AnchorPane fx:id="friendsPane" prefHeight="211.0" prefWidth="330.0" />
                                  </content>
                               </ScrollPane>
                            </children>

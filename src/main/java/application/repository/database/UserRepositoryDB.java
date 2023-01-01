@@ -1,10 +1,12 @@
 package application.repository.database;
 
-import application.domain.Friend;
-import application.domain.MailAddress;
-import application.domain.User;
-import application.domain.exceptions.ValidationException;
+import application.model.Avatar;
+import application.model.Friend;
+import application.model.MailAddress;
+import application.model.User;
+import application.model.exceptions.ValidationException;
 import application.repository.UserRepository;
+import application.repository.file.AvatarRepositoryFile;
 import application.utils.database.DataBase;
 
 import java.sql.Date;
@@ -28,34 +30,25 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
         LocalDate registerDate = resultSet.getDate("register_date").toLocalDate();
         LocalDate birthDate = resultSet.getDate("birth_date").toLocalDate();
         String biography = resultSet.getString("biography");
+        Avatar avatar = AvatarRepositoryFile.getInstance().find(resultSet.getShort("avatar_id"))
+                .orElse(null);
+
         try {
             return Optional.of(new User(id, MailAddress.of(email), firstName, lastName, password,
-                    registerDate, birthDate, biography));
+                    registerDate, birthDate, biography, avatar));
         } catch (ValidationException validationException) {
             throw new RuntimeException(validationException);
         }
     }
 
     public Optional<Friend> extractFriend(ResultSet resultSet) throws SQLException {
-        UUID id = resultSet.getObject("user_id", UUID.class);
-        String email = resultSet.getString("email");
-        String firstName = resultSet.getString("first_name");
-        String lastName = resultSet.getString("last_name");
-        String password = resultSet.getString("password");
-        LocalDate registerDate = resultSet.getDate("register_date").toLocalDate();
-        LocalDate birthDate = resultSet.getDate("birth_date").toLocalDate();
-        String biography = resultSet.getString("biography");
+        User user = extractEntity(resultSet).orElseThrow(() -> new RuntimeException("Database error"));
         LocalDateTime friendsFrom = null;
         if (resultSet.getTimestamp("friends_from") != null) {
             friendsFrom = resultSet.getTimestamp("friends_from").toLocalDateTime();
         }
         int commonFriends = resultSet.getInt("common_friends");
-        try {
-            return Optional.of(new Friend(id, MailAddress.of(email), firstName, lastName, password,
-                    registerDate, birthDate, biography, friendsFrom, commonFriends));
-        } catch (ValidationException e) {
-            throw new RuntimeException(e);
-        }
+        return Optional.of(new Friend(user, friendsFrom, commonFriends));
     }
 
     @Override
@@ -98,7 +91,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
     protected PreparedStatement updateStatement(Connection connection, User user) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
         "UPDATE users " +
-            "SET email = ?, first_name = ?, last_name = ?, password = ?, register_date = ?, birth_date = ?, biography = ? " +
+            "SET email = ?, first_name = ?, last_name = ?, password = ?, register_date = ?, birth_date = ?, biography = ?, avatar_id = ? " +
             "WHERE user_id = ?");
         preparedStatement.setString(1, user.getMailAddress().toString());
         preparedStatement.setString(2, user.getFirstName());
@@ -108,6 +101,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
         preparedStatement.setDate(6, Date.valueOf(user.getBirthDate()));
         preparedStatement.setString(7, user.getBiography());
         preparedStatement.setObject(8, user.getID(), Types.OTHER);
+        preparedStatement.setShort(9, user.getAvatar().getID());
         return preparedStatement;
     }
 
@@ -154,7 +148,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                      "                            OR (F2.second_user = ? AND F2.first_user = F1.first_user AND F1.first_user != U.user_id) " +
                      "                            OR (F2.first_user = ? AND F2.second_user = F1.second_user AND F1.second_user != U.user_id) " +
                      "                            OR (F2.second_user = ? AND F2.first_user = F1.second_user AND F1.second_user != U.user_id) " +
-                     "    GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography) U " +
+                     "    GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, avatar_id) U " +
                      "LEFT JOIN friendships F ON (first_user = U.user_id AND second_user = ?) " +
                      "                        OR (second_user = U.user_id AND first_user = ?) " +
                      "ORDER BY U.first_name, U.last_name;"
@@ -183,7 +177,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                     "                        OR (F2.second_user = ? AND F2.first_user = F1.first_user AND F1.first_user != F.user_id) " +
                     "                        OR (F2.first_user = ? AND F2.second_user = F1.second_user AND F1.second_user != F.user_id) " +
                     "                        OR (F2.second_user = ? AND F2.first_user = F1.second_user AND F1.second_user != F.user_id) " +
-                    "GROUP BY F.user_id, F.email, F.first_name, F.last_name, F.password, F.register_date, F.birth_date, F.biography, F.friends_from;");
+                    "GROUP BY F.user_id, F.email, F.first_name, F.last_name, F.password, F.register_date, F.birth_date, F.biography, F.avatar_id, F.friends_from;");
                 preparedStatement.setObject(1, ofUserID);
                 preparedStatement.setObject(2, ofUserID);
                 preparedStatement.setObject(3, fromUserID);
@@ -191,8 +185,6 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                 preparedStatement.setObject(5, fromUserID);
                 preparedStatement.setObject(6, fromUserID);
             }
-
-            System.out.println(preparedStatement);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -218,7 +210,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                 "       OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
                 "WHERE (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?) " +
                 "   AND user_id <= ? " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, F1.friends_from " +
+                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, avatar_id, F1.friends_from " +
                 "UNION " +
                 "SELECT U.*, F1.friends_from AS friends_from, count(F3) AS common_friends " +
                 "FROM users U " +
@@ -230,7 +222,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                 "       OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
                 "WHERE (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?) " +
                 "   AND user_id >= ? " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography , F1.friends_from " +
+                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, avatar_id, F1.friends_from " +
                 "ORDER BY common_friends DESC, first_name, last_name " +
                 "LIMIT 10");
             preparedStatement.setObject(1, fromUserID, Types.OTHER);
@@ -250,8 +242,6 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
             preparedStatement.setString(14, "%" + match + "%");
             preparedStatement.setString(15, "%" + match + "%");
             preparedStatement.setObject(16, fromUserID, Types.OTHER);
-
-            System.out.println(preparedStatement);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -277,7 +267,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                 "                            AND F1.first_user != ? AND F1.second_user != ? " +
                 "    LEFT JOIN friendships F2 ON ((F2.second_user = F1.first_user OR F2.second_user = F1.second_user) AND F2.first_user = ?) " +
                 "                            OR ((F2.first_user = F1.first_user OR F2.first_user = F1.second_user) AND F2.second_user = ?) " +
-                "GROUP BY U.user_id, U.email, U.first_name, U.last_name, U.password, U.register_date, U.birth_date, U.biography, U.friends_from");
+                "GROUP BY U.user_id, U.email, U.first_name, U.last_name, U.password, U.register_date, U.birth_date, U.biography, U.avatar_id, U.friends_from");
 
             preparedStatement.setObject(1, fromUserID, Types.OTHER);
             preparedStatement.setObject(2, fromUserID, Types.OTHER);
@@ -309,7 +299,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                 "      OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
                 "      OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
                 "WHERE user_id = ? AND user_id <= ? " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography , F1.friends_from UNION " +
+                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, avatar_id, F1.friends_from UNION " +
                 "SELECT U.*, F1.friends_from AS friends_from, count(F3.first_user) AS common_friends " +
                 "FROM users U " +
                 "    LEFT JOIN friendships F1 ON F1.second_user = user_id" +
@@ -319,7 +309,7 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
                 "      OR (F1.first_user = F2.first_user AND F3.first_user = F2.second_user AND F3.second_user = ?) " +
                 "      OR (F1.first_user = F2.second_user AND F3.first_user = F2.first_user AND F3.second_user = ?) " +
                 "WHERE user_id = ? AND user_id >= ? " +
-                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography , F1.friends_from");
+                "GROUP BY user_id, email, first_name, last_name, password, register_date, birth_date, biography, avatar_id, F1.friends_from");
 
             preparedStatement.setObject(1, fromUserID, Types.OTHER);
             preparedStatement.setObject(2, fromUserID, Types.OTHER);

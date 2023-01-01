@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.list.NotificationCardController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="notificationImage" fitHeight="70.0" fitWidth="70.0" onMouseEntered="#handleImageEntered" onMouseExited="#handleImageExited" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../media/icons/notification-info.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <ImageView fx:id="removeNotificationImage" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#handleImageClicked" onMouseEntered="#handleImageEntered" onMouseExited="#handleImageExited" pickOnBounds="true" preserveRatio="true" styleClass="delete-button" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../../media/icons/notification-delete.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER_LEFT" layoutX="105.0" layoutY="10.0" prefHeight="80.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Notification title" />
+            <TextFlow fx:id="messageTextFlow" prefHeight="60.0" prefWidth="270.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas dolor nulla. Aenean porttitor." wrappingWidth="258.7236328125" />
+               </children>
+            </TextFlow>
+         </children>
+      </VBox>
+      <Button fx:id="rejectButton" layoutX="426.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleRejectButton" prefHeight="40.0" prefWidth="40.0" styleClass="reject-button" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <Button fx:id="acceptButton" layoutX="354.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAcceptButton" prefHeight="40.0" prefWidth="40.0" styleClass="accept-button" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="60.0" />
+      <Text fx:id="dateText" layoutX="354.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message" text="DD/MM/YYYY HH:MM:SS" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+   </children>
+   <stylesheets>
+      <URL value="@../../css/style.css" />
+      <URL value="@../../css/list/notification-card.css" />
+   </stylesheets>
+</AnchorPane>

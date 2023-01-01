@@ -1,10 +1,8 @@
 package application.utils.pair;
 
 /**
- * The record <b>Pair</b> contains 2 comparable objects, the first one will be smaller than the second one.
- *
- * @param <E1> the type of the objects, should extend Comparable
- */
+ * The generic class <b>Pair</b> contains 2 objects.
+ **/
 public class Pair<E1, E2> {
     private final E1 first;
     private final E2 second;

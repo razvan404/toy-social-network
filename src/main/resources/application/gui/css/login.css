@@ -1,5 +1,5 @@
-.user-background {
-    -fx-background-image: url("../media/login-background.png");
+.background {
+    -fx-background-image: url("../media/backgrounds/login-background.gif");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
@@ -48,57 +48,6 @@
 
 .login-text {
     -fx-fill: #555;
-}
-
-.date-picker .text-field {
-    -fx-background-radius: 4px 0 0 4px;
-}
-
-.date-picker:editable > .arrow-button > * {
-    -fx-opacity: 0;
-}
-
-.date-picker > .arrow-button {
-    -fx-background-color: -fx-text-box-border, #fff;
-    -fx-background-image: url("../media/icons/register-calendar.png");
-    -fx-background-size: 60% 60%;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-background-radius: 0 4px 4px 0;
-    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);
-}
-
-.date-picker .cell {
-    -fx-text-fill: #222;
-}
-.date-picker .cell:hover {
-    -fx-background-color: #eee;
-}
-.date-picker .cell:focused {
-    -fx-background-color: #eee;
-}
-
-.date-picker-popup {
-    -fx-border-color: transparent;
-    -fx-min-width: 310px;
-}
-
-.date-picker-popup .month-year-pane {
-    -fx-background-color: #7cb;
-}
-
-.date-picker-popup .month-year-pane .label {
-    -fx-text-fill: #fff;
-}
-
-.date-picker-popup .spinner .button {
-    -fx-background-color: transparent;
-}
-
-.date-picker-popup .spinner .button .left-arrow,
-.date-picker-popup .spinner .button .right-arrow{
-    -fx-background-color: #fff;
 }
 
 .hyperlink {

@@ -15,8 +15,9 @@ module application.gui {
     exports application.service;
     exports application.service.exceptions;
     exports application.repository;
-    exports application.domain;
-    exports application.domain.exceptions;
+    exports application.model;
+    exports application.model.notification;
+    exports application.model.exceptions;
     exports application.utils;
     exports application.utils.pair;
 }

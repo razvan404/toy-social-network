@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.InterfaceController">
+<AnchorPane prefHeight="560.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.InterfaceController">
    <children>
-      <AnchorPane fx:id="mainSection" layoutY="50.0" prefHeight="550.0" prefWidth="800.0" styleClass="main-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
-      <VBox alignment="CENTER" fillWidth="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane fx:id="mainSection" layoutY="50.0" prefHeight="510.0" prefWidth="750.0" styleClass="main-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="45.0" />
+      <AnchorPane fx:id="searchSection" layoutY="52.0" prefHeight="200.0" prefWidth="250.0" styleClass="search-list" AnchorPane.leftAnchor="6.0" />
+      <AnchorPane fx:id="toolBar" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" styleClass="tool-section" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <AnchorPane fx:id="searchSection" prefHeight="200.0" prefWidth="380.0" styleClass="search-list" />
-         </children>
-      </VBox>
-      <AnchorPane fx:id="toolBar" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" styleClass="tool-section" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
-         <children>
-            <VBox alignment="CENTER" layoutX="-4.099999904632568" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox alignment="CENTER" layoutX="-4.099999904632568" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box" VBox.vgrow="NEVER">
                      <children>
-                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="50.0" styleClass="menu-button" />
-                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="150.0" text="MENU" HBox.hgrow="ALWAYS" />
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="50.0" prefWidth="50.0" styleClass="home-button" />
+                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="50.0" prefWidth="150.0" text="HOME" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box">
                      <children>
-                        <Button minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="friends-button" />
-                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="FRIENDS" HBox.hgrow="ALWAYS" />
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="50.0" prefWidth="50.0" styleClass="friends-button" />
+                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="50.0" prefWidth="150.0" text="FRIENDS" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box">
@@ -40,40 +37,54 @@
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box">
                      <children>
-                        <Button minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="notifications-button" />
-                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="NOTIFICATIONS" HBox.hgrow="ALWAYS" />
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#handleNotificationsButton" prefHeight="50.0" prefWidth="50.0" styleClass="notifications-button" />
+                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" onAction="#handleNotificationsButton" prefHeight="50.0" prefWidth="150.0" text="NOTIFICATIONS" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box">
+                     <children>
+                        <Button minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="messages-button" />
+                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="MESSAGES" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="5.900000095367432" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box">
+                     <children>
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#handleProfileButton" prefHeight="50.0" prefWidth="50.0" styleClass="profile-button" />
+                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" onAction="#handleProfileButton" prefHeight="50.0" prefWidth="150.0" text="PROFILE" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box">
+                     <children>
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#handleSettingsButton" prefHeight="50.0" prefWidth="50.0" styleClass="settings-button" />
+                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" onAction="#handleSettingsButton" prefHeight="50.0" prefWidth="150.0" text="SETTINGS" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="200.0" styleClass="h-box">
+                     <children>
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#handleSignOutButton" prefHeight="50.0" prefWidth="50.0" styleClass="exit-button" />
+                        <Button ellipsisString="" minWidth="0.0" mnemonicParsing="false" onAction="#handleSignOutButton" prefHeight="50.0" prefWidth="150.0" text="SIGN OUT" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="-86.0" layoutY="-1.0" prefHeight="50.0" prefWidth="800.0" styleClass="top-section" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="-86.0" layoutY="-1.0" prefHeight="50.0" prefWidth="800.0" styleClass="top-section" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <TextField fx:id="searchField" onKeyTyped="#handleSearchField" prefHeight="37.0" prefWidth="380.0" promptText="🔍 Search user" styleClass="search-bar" />
-               </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#handleProfileButton" prefHeight="50.0" prefWidth="50.0" styleClass="profile-button" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="settings-button" />
-                  <Button fx:id="handleSignOutButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="exit-button" />
-               </children>
-            </HBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="50.0" prefWidth="200.0" styleClass="home-section" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="50.0" prefWidth="200.0" text="Zoop!" />
-               </children>
-            </HBox>
+                  <ImageView fitHeight="40.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../media/small-chatter.png" />
+                     </image>
+                  </ImageView>
+               </children></VBox>
+            <TextField fx:id="searchField" layoutX="110.0" layoutY="7.0" onKeyTyped="#handleSearchField" prefHeight="36.0" prefWidth="250.0" promptText="🔍 Search user" styleClass="search-bar" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="7.0" />
+            <Button layoutX="746.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="50.0" styleClass="menu-button" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
    </children>

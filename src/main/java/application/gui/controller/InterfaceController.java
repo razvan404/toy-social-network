@@ -1,6 +1,6 @@
 package application.gui.controller;
 
-import application.domain.Friend;
+import application.model.Friend;
 import application.gui.SocialNetworkApplication;
 import application.gui.controller.list.UserListController;
 import application.gui.controller.windows.InterfaceWindow;
@@ -26,6 +26,8 @@ public class InterfaceController extends InterfaceWindow {
 
     @FXML
     public void initialize() throws IOException {
+        setCurrentWindow(this);
+
         if (mainSection != null) {
             setInterfaceController(this);
             searchSection.setPrefHeight(0);
@@ -34,8 +36,9 @@ public class InterfaceController extends InterfaceWindow {
         }
     }
 
-    public void handleChangeWindow() throws IOException {
+    public void handleChangeWindow() {
         searchSection.getChildren().clear();
+        searchField.setText("");
         if (isToolBarExtended) {
             handleMenuButton();
         }
@@ -53,8 +56,6 @@ public class InterfaceController extends InterfaceWindow {
             loader.<UserListController>getController().setEntities(resultList);
             loader.<UserListController>getController().build();
 
-            Animations.changeHeightTransition(searchSection, searchSection.getHeight(), searchedPane.getHeight()).play();
-
             searchSection.getChildren().setAll(searchedPane);
             AnchorPane.setBottomAnchor(searchedPane, 0d);
             AnchorPane.setLeftAnchor(searchedPane, 0d);
@@ -62,31 +63,19 @@ public class InterfaceController extends InterfaceWindow {
             AnchorPane.setTopAnchor(searchedPane, 0d);
         }
         else {
-            Animations.changeHeightTransition(searchSection, searchSection.getHeight(), 0).play();
             searchSection.getChildren().clear();
         }
     }
 
-    public void handleProfileButton() throws IOException {
-        showUserProfile(networkService.getCurrentUser());
-    }
-
-    public void handleSignOutButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/login.fxml"));
-        changeScene(loader.load());
-    }
-
-    public void handleMenuButton() throws IOException {
+    public void handleMenuButton() {
         if (!isToolBarExtended) {
             Animations.changeWidthTransition(toolBar, 50, 200).play();
-            Animations.changeBlurTransition(mainPane, 0, 8).play();
-            mainPane.setDisable(true);
+            Animations.changeRightAnchorPaneTransition(mainPane, 45, 195).play();
             isToolBarExtended = true;
         }
         else {
             Animations.changeWidthTransition(toolBar, 200, 50).play();
-            Animations.changeBlurTransition(mainPane, 8, 0).play();
-            mainPane.setDisable(false);
+            Animations.changeRightAnchorPaneTransition(mainPane, 195, 45).play();
             isToolBarExtended = false;
         }
     }
@@ -97,6 +86,44 @@ public class InterfaceController extends InterfaceWindow {
         setMainPaneContent(loader.load());
     }
 
+    public void handleFriendsButton() throws IOException {
+        handleChangeWindow();
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/friends.fxml"));
+        setMainPaneContent(loader.load());
+    }
+
+    public void handleFriendsButton(Friend currentFriend) throws IOException {
+        handleChangeWindow();
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/friends.fxml"));
+        AnchorPane friendsPane = loader.load();
+        loader.<FriendsController>getController().setSelectedFriend(currentFriend);
+        setMainPaneContent(friendsPane);
+    }
+
+    public void handleNotificationsButton() throws IOException {
+        handleChangeWindow();
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/notifications.fxml"));
+        AnchorPane notifications = loader.load();
+        setMainPaneContent(notifications);
+    }
+
+    public void handleProfileButton() throws IOException {
+        showUserProfile(networkService.getCurrentUser());
+    }
+
+    public void handleSettingsButton() throws IOException {
+        handleChangeWindow();
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/settings.fxml"));
+        AnchorPane notifications = loader.load();
+        setMainPaneContent(notifications);
+    }
+
+    public void handleSignOutButton() throws IOException {
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/login.fxml"));
+        changeScene(loader.load());
+    }
+
+
     public void showUserProfile(Friend friend) throws IOException {
         handleChangeWindow();
         FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/profile.fxml"));
@@ -105,5 +132,10 @@ public class InterfaceController extends InterfaceWindow {
         loader.<ProfileController>getController().build();
 
         setMainPaneContent(userProfile);
+    }
+
+    @Override
+    public void refresh() throws IOException {
+        currentInterfaceWindow.refresh();
     }
 }

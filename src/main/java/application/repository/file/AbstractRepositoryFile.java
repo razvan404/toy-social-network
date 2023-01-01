@@ -1,6 +1,6 @@
 package application.repository.file;
 
-import application.domain.Entity;
+import application.model.Entity;
 import application.repository.memory.AbstractRepositoryInMemory;
 
 import java.io.IOException;

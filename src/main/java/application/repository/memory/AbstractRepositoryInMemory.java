@@ -1,6 +1,6 @@
 package application.repository.memory;
 
-import application.domain.Entity;
+import application.model.Entity;
 import application.repository.AbstractRepository;
 
 import java.util.*;

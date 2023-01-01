@@ -1,31 +1,33 @@
 package application.service;
 
-import application.domain.Community;
-import application.domain.User;
+import application.model.Community;
+import application.model.User;
 import application.repository.memory.CommunityRepository;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CommunityService extends AbstractService<Long, Community> {
+public class CommunityService {
+    private final CommunityRepository repository;
     private final UserService userService;
+    public long identity = 0;
 
     public CommunityService(UserService userService) {
-        super(CommunityRepository.getInstance());
+        this.repository = CommunityRepository.getInstance();
         this.userService = userService;
 
     }
 
     public void saveCommunity(List<User> userList) {
-        Community community = new Community(userList);
+        Community community = new Community(++identity, userList);
         community.setFriendshipsCount(countFriendships(community));
         community.setSocialScore(calculateSocialScore(community));
         repository.save(community);
     }
 
     public void clear() {
-        ((CommunityRepository) repository).clear();
-        Community.resetID();
+        identity = 0;
+        repository.clear();
     }
 
     /**
@@ -73,6 +75,6 @@ public class CommunityService extends AbstractService<Long, Community> {
     }
 
     public Collection<Community> findAll() {
-        return ((CommunityRepository) repository).findAll();
+        return repository.findAll();
     }
 }

@@ -1,8 +1,7 @@
 package application.repository;
 
-import application.domain.Friendship;
+import application.model.Friendship;
 import application.utils.pair.DistinctPair;
-import application.utils.pair.Pair;
 
 import java.util.UUID;
 

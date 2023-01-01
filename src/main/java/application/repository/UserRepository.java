@@ -1,19 +1,13 @@
 package application.repository;
 
-import application.domain.Friend;
-import application.domain.User;
+import application.model.Friend;
+import application.model.User;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends AbstractRepository<UUID, User> {
-    /**
-     * Returns the friends list of a User.
-     * @param userID the identifier of the user to look for its friends
-     * @return the friend list of the user if it exists in the repository,
-     *         null otherwise
-     */
     List<Friend> findFriendsOf(UUID fromUserID, UUID ofUserID);
 
     Optional<User> findByMail(String mail);

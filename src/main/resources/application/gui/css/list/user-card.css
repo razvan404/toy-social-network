@@ -1,13 +1,5 @@
 .root {
     -fx-background-color: transparent;
-}
-.image {
-    -fx-background-color:
-            #000,
-            linear-gradient(#280 0%, #333 20%, #240 100%),
-            linear-gradient(#333, #121),
-            radial-gradient(center 50% 0%, radius 100%, rgba(99, 222, 81, 0.9), rgba(255, 255, 255, 0));
-    -fx-background-insets: 0, 1, 2, 0;
     -fx-cursor: hand;
 }
 
@@ -15,6 +7,7 @@
     -fx-background-color: transparent;
     -fx-font-size: 12px;
 }
+
 .user-info .user-name {
     -fx-font-weight: bolder;
     -fx-font-size: 20px;

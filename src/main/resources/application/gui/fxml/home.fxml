@@ -10,11 +10,11 @@
 
 <AnchorPane prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.HomeController">
    <children>
-      <VBox alignment="CENTER" fillWidth="false" spacing="50.0" styleClass="user-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="backgroundBox" alignment="CENTER" fillWidth="false" spacing="50.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="350.0" prefWidth="680.0" styleClass="frame">
+            <AnchorPane prefHeight="420.0" prefWidth="405.0" styleClass="frame">
                <children>
-                  <AnchorPane layoutX="35.0" layoutY="4.0" prefHeight="120.0" prefWidth="310.0" styleClass="users-info-section" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <AnchorPane fx:id="usersPane" layoutX="35.0" layoutY="4.0" prefHeight="120.0" prefWidth="365.0" styleClass="users-info-section" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="150.0">
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="10.0">
                            <image>
@@ -25,7 +25,7 @@
                         <Text fx:id="usersCount" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="XYZ" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="130.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="359.0" layoutY="4.0" prefHeight="120.0" prefWidth="310.0" styleClass="friendships-info-section" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <AnchorPane fx:id="friendshipsPane" layoutX="346.0" layoutY="135.0" prefHeight="120.0" prefWidth="365.0" styleClass="friendships-info-section" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="285.0">
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="10.0">
                            <image>
@@ -36,34 +36,23 @@
                         <Text fx:id="friendshipsCount" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="XYZ" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="130.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="359.0" layoutY="151.0" prefHeight="120.0" prefWidth="310.0" styleClass="contact-section" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0">
+                  <AnchorPane fx:id="chatterPane" layoutX="20.0" layoutY="307.0" prefHeight="120.0" prefWidth="365.0" styleClass="chatter-info-section" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                      <children>
-                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="10.0">
-                           <image>
-                              <Image url="@../media/icons/home-blank.png" />
-                           </image>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="blank" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="20.0" />
-                        <TextFlow layoutX="120.0" layoutY="56.0" prefHeight="54.0" prefWidth="150.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="125.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="content" text=" blank" />
-                           </children>
-                        </TextFlow>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="35.0" layoutY="151.0" prefHeight="170.0" prefWidth="310.0" styleClass="tsn-info-section" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="10.0">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="251.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <image>
                               <Image url="@../media/icons/home-network.png" />
                            </image>
                         </ImageView>
-                        <Text layoutX="110.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="zoop" text="Zoop!" AnchorPane.leftAnchor="120.0" />
-                        <TextFlow layoutX="15.0" layoutY="110.0" prefHeight="60.0" prefWidth="278.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                        <VBox layoutX="5.0" layoutY="10.0" AnchorPane.leftAnchor="120.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="content" text=" Connect with friends and the world around you!" wrappingWidth="273.96875" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="chatter" text="Chatter" />
+                              <TextFlow prefHeight="60.0" prefWidth="250.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="content" text="  Connect with friends and the world around you!" wrappingWidth="252.0" />
+                                 </children>
+                              </TextFlow>
                            </children>
-                        </TextFlow>
+                        </VBox>
                      </children>
                   </AnchorPane>
                </children>

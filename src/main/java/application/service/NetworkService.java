@@ -1,9 +1,12 @@
 package application.service;
 
-import application.domain.Community;
-import application.domain.Friend;
-import application.domain.User;
-import application.repository.memory.CommunityRepository;
+import application.model.Community;
+import application.model.Friend;
+import application.model.User;
+import application.model.exceptions.ValidationException;
+import application.model.notification.Notification;
+import application.model.notification.NotificationType;
+import application.service.exceptions.AlreadyExistsException;
 import application.utils.observer.Observable;
 
 import java.util.*;
@@ -14,6 +17,7 @@ import java.util.*;
 public class NetworkService extends Observable {
     public final UserService userService;
     public final FriendshipService friendshipService;
+    public final NotificationService notificationService;
     private final CommunityService communityService;
     private Friend currentUser;
 
@@ -23,9 +27,10 @@ public class NetworkService extends Observable {
      * @param userService       the service of Users
      * @param friendshipService the service of Friendships
      */
-    public NetworkService(UserService userService, FriendshipService friendshipService) {
+    public NetworkService(UserService userService, FriendshipService friendshipService, NotificationService notificationService) {
         this.userService = userService;
         this.friendshipService = friendshipService;
+        this.notificationService = notificationService;
         this.communityService = new CommunityService(userService);
     }
 
@@ -84,7 +89,7 @@ public class NetworkService extends Observable {
         if (userList.size() == 1) {
             return Optional.empty();
         }
-        Community community = new Community(userList);
+        Community community = new Community(0L, userList);
         community.setFriendshipsCount(communityService.countFriendships(community));
         community.setSocialScore(communityService.calculateSocialScore(community));
         return Optional.of(community);
@@ -108,6 +113,9 @@ public class NetworkService extends Observable {
     public Friend getCurrentUser() {
         return currentUser;
     }
+    public void setCurrentUser(Friend friend) {
+        this.currentUser = friend;
+    }
 
     public List<Friend> findByName(String subString) {
         return userService.findByName(currentUser.getID(), subString);
@@ -126,5 +134,41 @@ public class NetworkService extends Observable {
             return new Friend(currentUser, null, 0);
         }
         return userService.findFriend(currentUser.getID(), userID);
+    }
+
+    public List<Notification> getNotificationList() {
+        return notificationService.findUserNotifications(currentUser.getID());
+    }
+
+    public Notification getFriendRequest(UUID user) {
+        return notificationService.getFriendRequest(currentUser.getID(), user);
+    }
+
+    public void sendFriendRequest(UUID friendID) throws ValidationException, AlreadyExistsException {
+        notificationService.save(currentUser.getID(), friendID, "New friend request",
+                "You have an incoming friend request from " + currentUser.getName() + "!",
+                NotificationType.FRIEND_REQUEST);
+    }
+
+    public void acceptFriendRequest(Notification friendRequest) throws ValidationException, AlreadyExistsException {
+        friendshipService.save(friendRequest.getFromUser(), friendRequest.getToUser());
+        notificationService.save(currentUser.getID(), friendRequest.getFromUser(), "Friend acceptance",
+                currentUser.getName() + " accepted you into their " + "friend list!",
+                NotificationType.FRIEND_REQUEST_ACCEPTED);
+        notificationService.delete(friendRequest.getID());
+    }
+
+    public void rejectFriendRequest(Notification notification) throws ValidationException, AlreadyExistsException {
+        notificationService.save(currentUser.getID(), notification.getFromUser(), "Friend rejection",
+                currentUser.getName() + " did not accept you into their friend list!",
+                NotificationType.FRIEND_REQUEST_REJECTED);
+        notificationService.delete(notification.getID());
+    }
+
+    public void removeFriend(UUID friendID) throws ValidationException, AlreadyExistsException {
+        friendshipService.delete(currentUser.getID(), friendID);
+        notificationService.save(currentUser.getID(), friendID, "Friend removal",
+                currentUser.getName() + " removed you from their friend list!",
+                NotificationType.FRIEND_REMOVED);
     }
 }

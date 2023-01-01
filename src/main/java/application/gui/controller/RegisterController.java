@@ -1,16 +1,21 @@
 package application.gui.controller;
 
-import application.domain.User;
-import application.domain.exceptions.ValidationException;
+import application.model.Friend;
+import application.model.User;
+import application.model.exceptions.ValidationException;
+import application.model.notification.NotificationType;
 import application.gui.SocialNetworkApplication;
 import application.gui.controller.windows.ApplicationWindow;
+import application.service.exceptions.AlreadyExistsException;
 import application.service.exceptions.NotFoundException;
+import application.utils.Animations;
 import application.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
@@ -34,8 +39,19 @@ public class RegisterController extends ApplicationWindow {
     public Text errorText;
 
     @FXML
+    public VBox frameBox;
+    @FXML
     public void initialize() {
-        errorText.setText("");
+        setCurrentWindow(this);
+
+        firstNameField.setText(null);
+        lastNameField.setText(null);
+        mailAddressField.setText(null);
+        passwordField.setText(null);
+        confirmPasswordField.setText(null);
+        birthDatePicker.setValue(null);
+        errorText.setText(null);
+
         birthDatePicker.setConverter(new StringConverter<>() {
             public String toString(LocalDate date) {
                 if (date != null) {
@@ -52,6 +68,13 @@ public class RegisterController extends ApplicationWindow {
                 }
             }
         });
+
+
+        frameBox.setPrefWidth(300);
+        frameBox.setPrefHeight(450);
+
+        Animations.changeWidthTransition(frameBox, 300, 380).play();
+        Animations.changeHeightTransition(frameBox, 450, 550).play();
     }
 
     public void handleRegisterButton() throws IOException {
@@ -64,13 +87,15 @@ public class RegisterController extends ApplicationWindow {
                     firstNameField.getText(),
                     lastNameField.getText(),
                     passwordField.getText(),
-                    birthDatePicker.getValue(),
-                    null
+                    birthDatePicker.getValue()
             );
-            networkService.login(user.getMailAddress().toString(), user.getPassword());
+            networkService.notificationService.save(Constants.SERVER_UUID, user.getID(), "Welcome to Zoop!",
+                    "Hey " + user.getName() + ", this is a notification, bet you never saw something like" +
+                            " this!", NotificationType.INFORMATIVE);
+            networkService.setCurrentUser(new Friend(user, null, 0));
             FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/interface.fxml"));
             changeScene(loader.load());
-        } catch (ValidationException | NotFoundException exception) {
+        } catch (ValidationException | NotFoundException | AlreadyExistsException | IllegalArgumentException exception) {
             errorText.setText(exception.getMessage());
         }
     }
@@ -78,5 +103,10 @@ public class RegisterController extends ApplicationWindow {
     public void handleLoginHyperlink() throws IOException {
         FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/login.fxml"));
         changeScene(loader.load());
+    }
+
+    @Override
+    public void refresh() throws IOException {
+        initialize();
     }
 }

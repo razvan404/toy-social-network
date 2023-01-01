@@ -1,8 +1,7 @@
 package application.repository;
 
-import application.domain.Entity;
+import application.model.Entity;
 
-import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -49,7 +48,7 @@ public interface AbstractRepository<ID, E extends Entity<ID>> {
      * @param entity the updated version of the entity to be updated,
      *               must not be null
      * @return the old version of the entity if the update was successful,
-     *         otherwise the current entity
+     *         otherwise null
      * @throws IllegalArgumentException when one of the given arguments is null
      */
     Optional<E> update(E entity) throws IllegalArgumentException;

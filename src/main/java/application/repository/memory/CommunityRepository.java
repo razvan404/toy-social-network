@@ -1,6 +1,6 @@
 package application.repository.memory;
 
-import application.domain.Community;
+import application.model.Community;
 
 
 /**
