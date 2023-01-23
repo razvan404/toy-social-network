@@ -56,6 +56,7 @@ public abstract class ApplicationWindow {
         scene.setFill(Color.TRANSPARENT);
         applicationStage.setScene(scene);
         ResizeHelper.addResizeListener(applicationStage);
+        root.requestFocus();
     }
 
     public static void refreshCurrentWindow() throws IOException {

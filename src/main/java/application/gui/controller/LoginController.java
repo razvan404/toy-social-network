@@ -56,7 +56,7 @@ public class LoginController extends ApplicationWindow {
             networkService.login(mailField.getText(), passwordField.getText());
             FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/interface.fxml"));
             changeScene(loader.load());
-        } catch (NotFoundException | IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NotFoundException e) {
             errorText.setText(e.getMessage());
         }
     }

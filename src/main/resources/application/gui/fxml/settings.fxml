@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="510.0" prefWidth="750.0" styleClass="background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.SettingsController">
+<AnchorPane prefHeight="510.0" prefWidth="750.0" styleClass="background" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.gui.controller.SettingsController">
    <stylesheets>
       <URL value="@../css/style.css" />
       <URL value="@../css/settings.css" />
@@ -55,23 +55,23 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="60.0" prefWidth="200.0" styleClass="frame">
                      <children>
-                        <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="187.0" styleClass="delete-button" text="DELETE ACCOUNT" textAlignment="CENTER" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="8.0" />
+                        <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="44.0" prefWidth="187.0" styleClass="delete-button" text="DELETE ACCOUNT" textAlignment="CENTER" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="8.0" />
                      </children>
                   </AnchorPane>
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="470.0" prefWidth="370.0" spacing="10.0">
                <children>
-                  <AnchorPane prefHeight="40.0" prefWidth="400.0" styleClass="frame">
+                  <AnchorPane prefHeight="50.0" prefWidth="370.0" styleClass="frame">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER" prefHeight="44.0" prefWidth="370.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="settings-text" text="User settings" />
                            </children>
                         </HBox>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="420.0" prefWidth="400.0" styleClass="frame">
+                  <AnchorPane prefHeight="410.0" prefWidth="370.0" styleClass="frame">
                      <children>
                         <VBox alignment="CENTER" fillWidth="false" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -123,6 +123,11 @@
                                  </children>
                               </AnchorPane>
                               <Button mnemonicParsing="false" onAction="#handleUpdateButton" prefHeight="44.0" prefWidth="310.0" styleClass="save-button" text="Update your account" textAlignment="CENTER" />
+                              <TextFlow prefHeight="24.0" prefWidth="320.0" textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="successText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="success-text" text="Update success text" />
+                                 </children>
+                              </TextFlow>
                            </children>
                         </VBox>
                      </children>

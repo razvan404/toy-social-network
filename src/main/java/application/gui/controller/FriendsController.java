@@ -2,10 +2,8 @@ package application.gui.controller;
 
 import application.gui.SocialNetworkApplication;
 import application.gui.controller.list.FriendListController;
-import application.gui.controller.windows.ApplicationWindow;
 import application.gui.controller.windows.InterfaceWindow;
-import application.model.Friend;
-import application.model.notification.NotificationType;
+import application.models.Friend;
 import application.utils.Animations;
 import application.utils.Constants;
 import javafx.fxml.FXML;
@@ -72,7 +70,7 @@ public class FriendsController extends InterfaceWindow {
             errorText.setText("Please select a friend!");
             return;
         }
-        interfaceController.showUserProfile(selectedFriend);
+        interfaceController.showProfileOf(selectedFriend);
     }
 
     @FXML
@@ -81,6 +79,7 @@ public class FriendsController extends InterfaceWindow {
             errorText.setText("Please select a friend!");
             return;
         }
+        interfaceController.showMessagesWith(selectedFriend);
     }
 
     @FXML

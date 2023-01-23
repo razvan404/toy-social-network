@@ -1,7 +1,7 @@
 package application.repository.file;
 
 import application.configuration.Config;
-import application.model.Avatar;
+import application.models.Avatar;
 import application.repository.AvatarRepository;
 import javafx.scene.image.Image;
 

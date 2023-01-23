@@ -1,7 +1,7 @@
 package application.repository;
 
-import application.model.Friend;
-import application.model.User;
+import application.models.Friend;
+import application.models.User;
 
 import java.util.List;
 import java.util.Optional;

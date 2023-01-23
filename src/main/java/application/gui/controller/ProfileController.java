@@ -1,18 +1,21 @@
 package application.gui.controller;
 
-import application.model.Friend;
-import application.model.notification.Notification;
+import application.models.Friend;
+import application.models.notification.Notification;
 import application.gui.SocialNetworkApplication;
 import application.gui.controller.list.UserListController;
+import application.service.exceptions.NotFoundException;
 import application.utils.Animations;
 import application.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.effect.ColorAdjust;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -64,6 +67,18 @@ public class ProfileController extends InterfaceController {
     public ImageView profileImage;
 
     @FXML
+    public HBox buttonsBox;
+    @FXML
+    public Label buttonLabel;
+
+    @FXML
+    public ImageView buttonImage;
+    @FXML
+    public Button communityButton;
+    @FXML
+    public Button messageButton;
+
+    @FXML
     public void initialize() {
         setCurrentInterfaceWindow(this);
     }
@@ -75,9 +90,7 @@ public class ProfileController extends InterfaceController {
     public void build() throws IOException {
         Animations.bounceTransition(profileImage).play();
 
-        ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setHue(friend.getID().hashCode() * 1d / Integer.MAX_VALUE);
-        backgroundPane.setEffect(colorAdjust);
+        backgroundPane.setEffect(Animations.getColorAdjust(friend.getID()));
 
         profileImage.setImage(friend.getAvatar().getPhoto());
 
@@ -91,7 +104,7 @@ public class ProfileController extends InterfaceController {
         memberSinceText.setText(friend.getRegisterDate().format(Constants.DATE_FORMATTER) + " (" +
                 ChronoUnit.DAYS.between(friend.getRegisterDate(), LocalDate.now()) + " days)");
         birthDateText.setText(friend.getBirthDate().format(Constants.DATE_FORMATTER) + " (" +
-                ChronoUnit.YEARS.between(friend.getBirthDate(), LocalDate.now()) + " years)");
+                friend.getAge() + " years)");
 
         if (friend.getBiography() != null) {
             biographyText.setText(friend.getBiography());
@@ -111,35 +124,42 @@ public class ProfileController extends InterfaceController {
 
         if (networkService.getCurrentUser().getID().equals(friend.getID())) {
             buttonFlag = 0;
-            profileButton.setText("Profile settings");
             profileButton.getStyleClass().setAll("account-settings-button");
+            buttonLabel.setText("Account settings");
+            buttonImage.setImage(new Image("/application/gui/media/icons/profile-account-settings.png"));
+            buttonsBox.getChildren().remove(communityButton);
+            buttonsBox.getChildren().remove(messageButton);
         }
         else if (networkService.findFriendsOf(networkService.getCurrentUser().getID())
                 .stream().map(Friend::getID).toList().contains(friend.getID())) {
             buttonFlag = 1;
-            profileButton.setText("Remove friend");
-            profileButton.getStyleClass().setAll("remove-friend-button");
+            profileButton.getStyleClass().setAll("friend-button");
+            buttonLabel.setText("Remove friend");
+            buttonImage.setImage(new Image("/application/gui/media/icons/profile-remove-friend.png"));
         }
         else {
-            profileButton.getStyleClass().setAll("add-friend-button");
+            profileButton.getStyleClass().setAll("friend-button");
+            buttonImage.setImage(new Image("/application/gui/media/icons/profile-add-friend.png"));
             friendRequest = networkService.getFriendRequest(friend.getID());
+            buttonsBox.getChildren().remove(messageButton);
             if (friendRequest == null) {
                 buttonFlag = 2;
-                profileButton.setText("Friend request");
+                buttonLabel.setText("Friend request");
             }
             else if (networkService.getCurrentUser().getID().equals(friendRequest.getFromUser())) {
                 buttonFlag = 3;
-                profileButton.setText("Cancel request");
+                buttonLabel.setText("Cancel request");
             }
             else {
                 buttonFlag = 4;
-                profileButton.setText("Accept request");
+                buttonLabel.setText("Accept request");
             }
         }
 
         handleFriends();
     }
 
+    @FXML
     public void handleFriends() throws IOException {
         List<Friend> resultList = networkService.findFriendsOf(friend.getID());
 
@@ -156,13 +176,31 @@ public class ProfileController extends InterfaceController {
         AnchorPane.setBottomAnchor(friendsPane, 0d);
     }
 
+    @FXML
+    public void handleCommonFriends() throws IOException {
+        List<Friend> resultList = networkService.findCommonFriends(friend.getID());
+
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/list/user-list.fxml"));
+        AnchorPane friendsPane = loader.load();
+
+        loader.<UserListController>getController().setEntities(resultList);
+        loader.<UserListController>getController().build();
+
+        this.friendsPane.getChildren().setAll(friendsPane);
+        AnchorPane.setLeftAnchor(friendsPane, 0d);
+        AnchorPane.setRightAnchor(friendsPane, 0d);
+        AnchorPane.setTopAnchor(friendsPane, 0d);
+        AnchorPane.setBottomAnchor(friendsPane, 0d);
+    }
+
+    @FXML
     public void handleButton() throws IOException {
         switch (buttonFlag) {
             case 0 -> interfaceController.handleSettingsButton();
             case 1 -> {
                 try {
                     networkService.removeFriend(friend.getID());
-                    interfaceController.showUserProfile(friend);
+                    interfaceController.showProfileOf(friend);
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(e.getMessage());
@@ -172,7 +210,7 @@ public class ProfileController extends InterfaceController {
             case 2 -> {
                 try {
                     networkService.sendFriendRequest(friend.getID());
-                    interfaceController.showUserProfile(friend);
+                    interfaceController.showProfileOf(friend);
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(e.getMessage());
@@ -181,12 +219,12 @@ public class ProfileController extends InterfaceController {
             }
             case 3 -> {
                 networkService.notificationService.delete(friendRequest.getID());
-                interfaceController.showUserProfile(friend);
+                interfaceController.showProfileOf(friend);
             }
             case 4 -> {
                 try {
                     networkService.acceptFriendRequest(friendRequest);
-                    interfaceController.showUserProfile(friend);
+                    interfaceController.showProfileOf(friend);
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(e.getMessage());
@@ -196,9 +234,23 @@ public class ProfileController extends InterfaceController {
         }
     }
 
+    @FXML
+    public void handleFriendCommunityButton() throws IOException {
+        interfaceController.showCommunityOf(friend);
+    }
+
+    @FXML
+    public void handleMessageButton() throws IOException {
+        interfaceController.showMessagesWith(friend);
+    }
+
     @Override
     public void refresh() throws IOException {
-        friend = networkService.findFriend(friend.getID());
+        try {
+            friend = networkService.findFriend(friend.getID());
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
+        }
         build();
     }
 }

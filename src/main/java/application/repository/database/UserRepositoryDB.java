@@ -1,10 +1,10 @@
 package application.repository.database;
 
-import application.model.Avatar;
-import application.model.Friend;
-import application.model.MailAddress;
-import application.model.User;
-import application.model.exceptions.ValidationException;
+import application.models.Avatar;
+import application.models.Friend;
+import application.models.MailAddress;
+import application.models.User;
+import application.models.exceptions.ValidationException;
 import application.repository.UserRepository;
 import application.repository.file.AvatarRepositoryFile;
 import application.utils.database.DataBase;
@@ -91,17 +91,17 @@ public class UserRepositoryDB extends AbstractRepositoryDB<UUID, User> implement
     protected PreparedStatement updateStatement(Connection connection, User user) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
         "UPDATE users " +
-            "SET email = ?, first_name = ?, last_name = ?, password = ?, register_date = ?, birth_date = ?, biography = ?, avatar_id = ? " +
+            "SET email = ?, first_name = ?, last_name = ?, password = ?, birth_date = ?, biography = ?, avatar_id = ? " +
             "WHERE user_id = ?");
         preparedStatement.setString(1, user.getMailAddress().toString());
         preparedStatement.setString(2, user.getFirstName());
         preparedStatement.setString(3, user.getLastName());
         preparedStatement.setString(4, user.getPassword());
-        preparedStatement.setDate(5, Date.valueOf(user.getRegisterDate()));
-        preparedStatement.setDate(6, Date.valueOf(user.getBirthDate()));
-        preparedStatement.setString(7, user.getBiography());
+        preparedStatement.setDate(5, Date.valueOf(user.getBirthDate()));
+        preparedStatement.setString(6, user.getBiography());
+        preparedStatement.setShort(7, user.getAvatar().getID());
         preparedStatement.setObject(8, user.getID(), Types.OTHER);
-        preparedStatement.setShort(9, user.getAvatar().getID());
+        System.out.println(preparedStatement);
         return preparedStatement;
     }
 

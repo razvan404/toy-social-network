@@ -1,6 +1,6 @@
 package application.gui.controller.list;
 
-import application.model.notification.Notification;
+import application.models.notification.Notification;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 

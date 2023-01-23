@@ -1,11 +1,12 @@
 package application.gui.controller;
 
-import application.model.Avatar;
+import application.models.Avatar;
 import application.gui.controller.windows.InterfaceWindow;
-import application.model.User;
-import application.model.exceptions.ValidationException;
+import application.models.User;
+import application.models.exceptions.ValidationException;
 import application.repository.file.AvatarRepositoryFile;
 import application.service.exceptions.AlreadyExistsException;
+import application.service.exceptions.NotFoundException;
 import application.utils.Animations;
 import application.utils.Constants;
 import javafx.fxml.FXML;
@@ -43,6 +44,8 @@ public class SettingsController extends InterfaceWindow {
     @FXML
     public Text errorText;
     @FXML
+    public Text successText;
+    @FXML
     public void initialize() {
         setCurrentInterfaceWindow(this);
 
@@ -53,6 +56,7 @@ public class SettingsController extends InterfaceWindow {
         confirmPasswordField.setText(null);
         birthDatePicker.setValue(null);
         errorText.setText(null);
+        successText.setText(null);
 
         User user =  networkService.getCurrentUser();
         avatarImage.setImage(user.getAvatar().getPhoto());
@@ -83,14 +87,13 @@ public class SettingsController extends InterfaceWindow {
     }
 
     @FXML
-    public void handleUpdateButton() {
+    public void handleUpdateButton() throws IOException {
         try {
+            successText.setText(null);
             if (passwordField.getText() != null && !passwordField.getText().equals(confirmPasswordField.getText())) {
                 throw new ValidationException("The passwords don't match");
             }
-
-            User currentUser = networkService.getCurrentUser();
-            networkService.userService.update(currentUser,
+            networkService.updateCurrentUser(
                     mailAddressField.getText(),
                     firstNameField.getText(),
                     lastNameField.getText(),
@@ -98,8 +101,23 @@ public class SettingsController extends InterfaceWindow {
                     birthDatePicker.getValue(),
                     biographyField.getText(),
                     avatar);
-        } catch (ValidationException | AlreadyExistsException e) {
+            refresh();
+            successText.setText("The update was successful!");
+        } catch (ValidationException | AlreadyExistsException | NotFoundException e) {
             errorText.setText(e.getMessage());
+        }
+    }
+
+    public void handleDeleteButton() throws IOException {
+        try {
+            networkService.deleteCurrentUser(
+                    mailAddressField.getText(),
+                    passwordField.getText()
+            );
+            interfaceController.handleSignOutButton();
+        } catch (NotFoundException e) {
+            errorText.setText("Please introduce your mail address and your password in the corresponding " +
+                    "fields bellow if you are sure you want to delete your account!");
         }
     }
 

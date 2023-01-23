@@ -1,19 +1,27 @@
-.title {
-    -fx-font-size: 20px;
+.card {
+    -fx-background-color: #fff;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.4), 5, 0, 0, 2);
 }
 
-.title-unseen {
+.top-section {
+    -fx-background-color: #fff;
+    -fx-background-radius: 10px 10px 0 0;
+    -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.4), 3, 0, 0, 2);
+}
+
+.title-text {
     -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.date-text {
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
 }
 
 .message {
     -fx-font-size: 13px;
-}
-
-.message-unseen {
-    -fx-font-size: 13px;
-    -fx-font-weight: bold
 }
 
 .button {

@@ -1,10 +1,6 @@
 package application.configuration;
 
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -12,7 +8,7 @@ import java.util.Properties;
  */
 public class Config {
     /**
-     * @return a list of properties
+     * @return the properties from the config file
      * @throws RuntimeException when the properties cannot be loaded
      */
     public static Properties getProperties() throws RuntimeException {

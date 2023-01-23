@@ -1,6 +1,6 @@
 package application.repository.database;
 
-import application.model.Entity;
+import application.models.Entity;
 import application.repository.AbstractRepository;
 import application.utils.database.DataBase;
 
@@ -90,8 +90,17 @@ public abstract class AbstractRepositoryDB<ID, E extends Entity<ID>> implements 
 
     @Override
     public Optional<E> update(E entity) throws IllegalArgumentException {
-        return Optional.empty();
-
+        if (entity == null) {
+            throw new IllegalArgumentException("The entity must not be null!");
+        }
+        Optional<E> optionalEntity = find(entity.getID());
+        if (optionalEntity.isEmpty()) {
+            return Optional.empty();
+        }
+        try (Connection connection = getConnection()) {
+            updateStatement(connection, entity).executeQuery();
+        } catch (SQLException ignored) {}
+        return optionalEntity;
     }
 
     @Override

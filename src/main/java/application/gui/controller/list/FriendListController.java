@@ -1,6 +1,6 @@
 package application.gui.controller.list;
 
-import application.model.Friend;
+import application.models.Friend;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
 

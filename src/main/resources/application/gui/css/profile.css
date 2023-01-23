@@ -37,16 +37,19 @@
 .friend-list-text {
     -fx-font-size: 18px;
     -fx-font-weight: bolder;
+    -fx-cursor: hand;
 }
 
 .in-common-text {
     -fx-font-size: 18px;
     -fx-font-weight: bolder;
+    -fx-cursor: hand;
 }
 
 .info-section {
     -fx-effect: dropshadow(GAUSSIAN, rgba(0, 0, 0, 0.7), 7, 0, 0, 3);
     -fx-background-color: #fff;
+    -fx-background-radius: 5px;
 }
 
 .description-header {
@@ -59,41 +62,22 @@
     -fx-font-weight: lighter;
 }
 
-.add-friend-button {
+.friend-button {
     -fx-background-color:
-            linear-gradient(#fff, #aaa),
-            radial-gradient(center 50% -40%, radius 200%, #ddd 45%, #bbb 50%);
+            linear-gradient(#fff, #ccc),
+            radial-gradient(center 50% -40%, radius 200%, #eee 45%, #ddd 50%);
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
-    -fx-background-image: url("../media/icons/profile-add-friend.png");
-    -fx-background-size: auto 80%;
-    -fx-background-position: right 6px center;
-    -fx-background-repeat: no-repeat;
-
-    -fx-text-fill: #222;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-alignment: center-left;
-    -fx-padding: 0 0 0 6px;
+    -fx-padding: 0 6px 0 6px;
+
+    -fx-cursor: hand;
 }
 
-.remove-friend-button {
-    -fx-background-color: linear-gradient(#ccc, #999);
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
-
-    -fx-background-image: url("../media/icons/profile-remove-friend.png");
-    -fx-background-size: auto 80%;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: right 6px center;
-    -fx-cursor: hand;
-
-    -fx-text-fill: #222;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-alignment: center-left;
-    -fx-padding: 0 0 0 6px;
+.friend-button .label {
+    -fx-text-fill: #111;
 }
 
 .account-settings-button {
@@ -104,16 +88,24 @@
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
-    -fx-background-image: url("../media/icons/profile-account-settings.png");
-    -fx-background-size: auto 80%;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: right 6px center;
 
-    -fx-text-fill: #fff;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-alignment: center-left;
-    -fx-padding: 0 0 0 6px;
+    -fx-padding: 0 6px 0 6px;
+
+    -fx-cursor: hand;
+}
+
+.account-settings-button .label {
+    -fx-text-fill: #fff;
+}
+
+.community-button {
+    -fx-background-color:
+            linear-gradient(#fff, #ccc),
+            radial-gradient(center 50% -40%, radius 200%, #eee 45%, #ddd 50%);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
 
     -fx-cursor: hand;
 }

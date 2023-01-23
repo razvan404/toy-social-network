@@ -2,19 +2,13 @@ package application.gui;
 
 import application.gui.controller.windows.ApplicationWindow;
 
-import application.repository.database.FriendshipRepositoryDB;
-import application.repository.database.NotificationRepositoryDB;
-import application.repository.database.UserRepositoryDB;
-import application.service.FriendshipService;
-import application.service.NetworkService;
-import application.service.NotificationService;
-import application.service.UserService;
+import application.repository.database.*;
+import application.service.*;
 import application.utils.database.DataBase;
 import application.utils.database.NetworkDataBase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -31,8 +25,9 @@ public class SocialNetworkApplication extends Application {
         ApplicationWindow.setNetworkService(new NetworkService(
                 new UserService(new UserRepositoryDB(networkDB)),
                 new FriendshipService(new FriendshipRepositoryDB(networkDB)),
-                new NotificationService(new NotificationRepositoryDB(networkDB))
-        ));
+                new CommunityService(new CommunityRepositoryDB(networkDB)),
+                new NotificationService(new NotificationRepositoryDB(networkDB)),
+                new MessageService(new MessageRepositoryDB(networkDB))));
 
         FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/window.fxml"));
         ApplicationWindow.setScene(loader.load());

@@ -10,6 +10,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.UUID;
+
 public final class Animations {
     private static final double DEFAULT_TRANSITION_DURATION = 250;
     private static final double DEFAULT_BOUNCE_DURATION = 2500;
@@ -148,5 +150,11 @@ public final class Animations {
 
     public static Animation rotateTransition(Node node) {
         return rotateTransition(node, -180, DEFAULT_TRANSITION_DURATION);
+    }
+
+    public static ColorAdjust getColorAdjust(UUID identifier) {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setHue(identifier.hashCode() * 1d / Integer.MAX_VALUE);
+        return colorAdjust;
     }
 }

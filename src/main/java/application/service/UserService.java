@@ -1,10 +1,10 @@
 package application.service;
 
-import application.model.Avatar;
-import application.model.Friend;
-import application.model.MailAddress;
-import application.model.User;
-import application.model.exceptions.ValidationException;
+import application.models.Avatar;
+import application.models.Friend;
+import application.models.MailAddress;
+import application.models.User;
+import application.models.exceptions.ValidationException;
 import application.repository.UserRepository;
 import application.service.exceptions.AlreadyExistsException;
 import application.service.exceptions.NotFoundException;
@@ -44,7 +44,7 @@ public class UserService {
     public List<Friend> findFriendsOf(UUID fromUser, UUID withUser) {
         return repository.findFriendsOf(fromUser, withUser);
     }
-    public Friend findFriend(UUID fromUser, UUID friendID) {
+    public Friend findFriend(UUID fromUser, UUID friendID) throws NotFoundException {
         return repository.findFriend(fromUser, friendID).orElseThrow(() -> new NotFoundException("There is no user with given identifier!"));
     }
 
@@ -88,8 +88,8 @@ public class UserService {
      * @param newBiography String, the new biography of the User
      */
     public void update(User user, String newMailAddress, String newFirstName, String newLastName, String newPassword,
-                       LocalDate newBirthDate, String newBiography, Avatar newAvatar) throws ValidationException, AlreadyExistsException {
-        if (!user.getMailAddress().toString().equals(newMailAddress) && repository.findByMail(newMailAddress).isPresent()) {
+                       LocalDate newBirthDate, String newBiography, Avatar newAvatar) throws ValidationException, AlreadyExistsException, NotFoundException {
+        if (newMailAddress != null && !user.getMailAddress().toString().equals(newMailAddress) && repository.findByMail(newMailAddress).isPresent()) {
             throw new AlreadyExistsException("The update could not be done because there is already another user with the same email address.");
         }
         if (newMailAddress == null || newMailAddress.equals("")) {
@@ -123,15 +123,15 @@ public class UserService {
 
         User.create(newMailAddress, newFirstName, newLastName, newPassword, newBirthDate, newBiography, newAvatar);
 
-        repository.update(new User(user.getID(), MailAddress.of(newMailAddress), newFirstName, newLastName, newPassword, newBirthDate, user.getRegisterDate(), newBiography, newAvatar))
+        repository.update(new User(user.getID(), MailAddress.of(newMailAddress), newFirstName, newLastName, newPassword, user.getRegisterDate(), newBirthDate, newBiography, newAvatar))
                 .orElseThrow(() -> new NotFoundException("The update could not be done because the specified user doesn't exist!"));
     }
 
-    public User find(UUID id) {
+    public User find(UUID id) throws NotFoundException {
         return repository.find(id).orElseThrow(() -> new NotFoundException("There is no user with the given identifier!"));
     }
 
-    public User getUserByMailAndPassword(String mailAddress, String password) {
+    public User getUserByMailAndPassword(String mailAddress, String password) throws NotFoundException {
         User user = repository.findByMail(mailAddress).orElseThrow(() -> new NotFoundException("Invalid mail address / password"));
         if (user.getPassword().equals(Encoder.encode(password))) {
             return user;

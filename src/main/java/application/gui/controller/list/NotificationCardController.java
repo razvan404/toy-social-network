@@ -1,8 +1,7 @@
 package application.gui.controller.list;
 
-import application.model.exceptions.ValidationException;
-import application.model.notification.Notification;
-import application.model.notification.NotificationStatus;
+import application.models.exceptions.ValidationException;
+import application.models.notification.Notification;
 import application.service.exceptions.AlreadyExistsException;
 import application.utils.Animations;
 import application.utils.Constants;
@@ -56,16 +55,10 @@ public class NotificationCardController extends AbstractCardController<Notificat
             case FRIEND_REQUEST_REJECTED -> notificationImage.setImage(new Image("/application/gui/media/icons/notification-rejected.png"));
             case FRIEND_REMOVED -> notificationImage.setImage(new Image("/application/gui/media/icons/notification-removed.png"));
         }
-        Animations.bounceTransition(notificationImage).play();
+        Animations.bounceTransition(removeNotificationImage).play();
 
         titleText.setText(notification.getTitle());
         messageText.setText(notification.getMessage());
-
-        if (notification.getStatus().equals(NotificationStatus.UNREAD)) {
-            titleText.getStyleClass().setAll("title-unseen");
-            dateText.getStyleClass().setAll("message-unseen");
-        }
-
         dateText.setText(notification.getDate().format(Constants.DATE_TIME_FORMATTER));
     }
 

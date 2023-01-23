@@ -1,13 +1,9 @@
 package application.gui.controller;
 
-import application.model.Friend;
-import application.model.User;
-import application.model.exceptions.ValidationException;
-import application.model.notification.NotificationType;
+import application.models.exceptions.ValidationException;
 import application.gui.SocialNetworkApplication;
 import application.gui.controller.windows.ApplicationWindow;
 import application.service.exceptions.AlreadyExistsException;
-import application.service.exceptions.NotFoundException;
 import application.utils.Animations;
 import application.utils.Constants;
 import javafx.fxml.FXML;
@@ -82,20 +78,12 @@ public class RegisterController extends ApplicationWindow {
             if (passwordField.getText() != null && !passwordField.getText().equals(confirmPasswordField.getText())) {
                 throw new ValidationException("The passwords don't match");
             }
-            User user = networkService.userService.save(
-                    mailAddressField.getText(),
-                    firstNameField.getText(),
-                    lastNameField.getText(),
-                    passwordField.getText(),
-                    birthDatePicker.getValue()
-            );
-            networkService.notificationService.save(Constants.SERVER_UUID, user.getID(), "Welcome to Zoop!",
-                    "Hey " + user.getName() + ", this is a notification, bet you never saw something like" +
-                            " this!", NotificationType.INFORMATIVE);
-            networkService.setCurrentUser(new Friend(user, null, 0));
+            networkService.register(mailAddressField.getText(),
+                    firstNameField.getText(), lastNameField.getText(),
+                    passwordField.getText(), birthDatePicker.getValue());
             FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/interface.fxml"));
             changeScene(loader.load());
-        } catch (ValidationException | NotFoundException | AlreadyExistsException | IllegalArgumentException exception) {
+        } catch (ValidationException | AlreadyExistsException | IllegalArgumentException exception) {
             errorText.setText(exception.getMessage());
         }
     }

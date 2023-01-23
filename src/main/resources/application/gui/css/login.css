@@ -24,7 +24,7 @@
     -fx-opacity: 100%;
 }
 
-.login-button:hover, :focused {
+.login-button:hover, .login-button:focused {
     -fx-background-color: linear-gradient(to bottom, #6ba, #498);
 }
 
@@ -32,7 +32,7 @@
     -fx-background-color: linear-gradient(to bottom, #f79, #d57);
 }
 
-.register-button:hover, :focused {
+.register-button:hover, .register-button:focused {
     -fx-background-color: linear-gradient(to bottom, #e68, #c46);
 
 }

@@ -1,6 +1,6 @@
 package application.repository;
 
-import application.model.Entity;
+import application.models.Entity;
 
 import java.util.Optional;
 

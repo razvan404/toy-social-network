@@ -1,9 +1,9 @@
 package application.repository.database;
 
-import application.model.exceptions.ValidationException;
-import application.model.notification.Notification;
-import application.model.notification.NotificationFactory;
-import application.model.notification.NotificationType;
+import application.models.exceptions.ValidationException;
+import application.models.notification.Notification;
+import application.models.notification.NotificationFactory;
+import application.models.notification.NotificationType;
 import application.repository.NotificationsRepository;
 import application.utils.database.DataBase;
 
@@ -34,8 +34,7 @@ public class NotificationRepositoryDB implements NotificationsRepository {
                 resultSet.getString("message"),
                 LocalDateTime.ofInstant(resultSet.getTimestamp("date")
                         .toInstant(), TimeZone.getDefault().toZoneId()),
-                resultSet.getShort("type"),
-                resultSet.getShort("status")
+                resultSet.getShort("type")
         );
     }
 
@@ -72,7 +71,7 @@ public class NotificationRepositoryDB implements NotificationsRepository {
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
             "INSERT INTO notifications" +
-                "(from_user, to_user, title, message, date, type, status) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                "(from_user, to_user, title, message, date, type) VALUES (?, ?, ?, ?, ?, ?)"
             );
             preparedStatement.setObject(1, notification.getFromUser(), Types.OTHER);
             preparedStatement.setObject(2, notification.getToUser(), Types.OTHER);
@@ -80,7 +79,6 @@ public class NotificationRepositoryDB implements NotificationsRepository {
             preparedStatement.setString(4, notification.getMessage());
             preparedStatement.setTimestamp(5, Timestamp.valueOf(notification.getDate()));
             preparedStatement.setShort(6, notification.getTypeID());
-            preparedStatement.setShort(7, notification.getStatusID());
 
             preparedStatement.executeQuery();
 
@@ -88,6 +86,7 @@ public class NotificationRepositoryDB implements NotificationsRepository {
         return Optional.empty();
     }
 
+    @Override
     public Optional<Notification> getFriendRequest(UUID firstUser, UUID secondUser) {
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
@@ -110,12 +109,27 @@ public class NotificationRepositoryDB implements NotificationsRepository {
         return Optional.empty();
     }
 
+    @Override
     public void delete(Long ID) {
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
             "DELETE FROM notifications " +
                 "WHERE notification_id = ?");
             preparedStatement.setLong(1, ID);
+
+            preparedStatement.executeQuery();
+        } catch (SQLException ignored) {}
+    }
+
+    @Override
+    public void deleteNotificationsOf(UUID user) {
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+            "DELETE FROM notifications " +
+                "WHERE from_user = ? OR to_user = ?"
+            );
+            preparedStatement.setObject(1, user, Types.OTHER);
+            preparedStatement.setObject(2, user, Types.OTHER);
 
             preparedStatement.executeQuery();
         } catch (SQLException ignored) {}

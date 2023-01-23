@@ -3,6 +3,7 @@ package application.gui.controller;
 import application.gui.SocialNetworkApplication;
 import application.gui.controller.windows.ApplicationWindow;
 import application.utils.Animations;
+import application.utils.ResizeHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -41,7 +42,7 @@ public class WindowController {
     @FXML
     public void handleMaximizeButton() {
         maximized = !maximized;
-        ApplicationWindow.applicationStage.setMaximized(maximized);
+        ResizeHelper.setMaximized(ApplicationWindow.applicationStage, maximized);
     }
 
     @FXML

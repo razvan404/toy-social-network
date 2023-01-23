@@ -1,9 +1,10 @@
 package application.gui.controller;
 
-import application.model.Friend;
+import application.models.Friend;
 import application.gui.SocialNetworkApplication;
 import application.gui.controller.list.UserListController;
 import application.gui.controller.windows.InterfaceWindow;
+import application.models.User;
 import application.utils.Animations;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -100,6 +101,11 @@ public class InterfaceController extends InterfaceWindow {
         setMainPaneContent(friendsPane);
     }
 
+    public void handleCommunityButton() throws IOException {
+        handleChangeWindow();
+        showCommunityOf(networkService.getCurrentUser());
+    }
+
     public void handleNotificationsButton() throws IOException {
         handleChangeWindow();
         FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/notifications.fxml"));
@@ -107,8 +113,12 @@ public class InterfaceController extends InterfaceWindow {
         setMainPaneContent(notifications);
     }
 
+    public void handleMessagesButton() throws IOException {
+        showMessagesWith(null);
+    }
+
     public void handleProfileButton() throws IOException {
-        showUserProfile(networkService.getCurrentUser());
+        showProfileOf(networkService.getCurrentUser());
     }
 
     public void handleSettingsButton() throws IOException {
@@ -124,7 +134,7 @@ public class InterfaceController extends InterfaceWindow {
     }
 
 
-    public void showUserProfile(Friend friend) throws IOException {
+    public void showProfileOf(Friend friend) throws IOException {
         handleChangeWindow();
         FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/profile.fxml"));
         AnchorPane userProfile = loader.load();
@@ -132,6 +142,26 @@ public class InterfaceController extends InterfaceWindow {
         loader.<ProfileController>getController().build();
 
         setMainPaneContent(userProfile);
+    }
+
+    public void showCommunityOf(User user) throws IOException {
+        handleChangeWindow();
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/community.fxml"));
+        AnchorPane communityPane = loader.load();
+        loader.<CommunityController>getController().setUser(user);
+        loader.<CommunityController>getController().build();
+
+        setMainPaneContent(communityPane);
+    }
+
+    public void showMessagesWith(Friend friend) throws IOException {
+        handleChangeWindow();
+        FXMLLoader loader = new FXMLLoader(SocialNetworkApplication.class.getResource("fxml/messages.fxml"));
+        AnchorPane messagesPane = loader.load();
+        loader.<MessagesController>getController().setCurrentFriend(friend);
+        loader.<MessagesController>getController().build();
+
+        setMainPaneContent(messagesPane);
     }
 
     @Override

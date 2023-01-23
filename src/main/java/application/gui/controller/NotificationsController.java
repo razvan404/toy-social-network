@@ -24,10 +24,10 @@ public class NotificationsController extends InterfaceWindow {
         loader.<NotificationListController>getController().build();
 
         this.notificationsPane.getChildren().setAll(notificationsPane);
-        AnchorPane.setLeftAnchor(notificationsPane, 0d);
+        AnchorPane.setLeftAnchor(notificationsPane, 2d);
         AnchorPane.setRightAnchor(notificationsPane, 0d);
-        AnchorPane.setTopAnchor(notificationsPane, 0d);
-        AnchorPane.setBottomAnchor(notificationsPane, 0d);
+        AnchorPane.setTopAnchor(notificationsPane, 2d);
+        AnchorPane.setBottomAnchor(notificationsPane, 2d);
     }
 
     @Override

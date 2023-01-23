@@ -1,9 +1,10 @@
 package application.gui.controller.list;
 
-import application.model.Friend;
+import application.models.Friend;
+import application.utils.Animations;
 import application.utils.Constants;
+import javafx.animation.Animation;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -19,6 +20,7 @@ public class UserCardController extends AbstractCardController<Friend> {
     public Text friendsFromText;
     @FXML
     public Text inCommonText;
+    private Animation hoverAnimation;
 
     @Override
     public void setEntity(Friend friend) {
@@ -41,10 +43,20 @@ public class UserCardController extends AbstractCardController<Friend> {
         else {
             inCommonText.setText("Common friends: " + friend.getCommonFriends());
         }
+        hoverAnimation = Animations.bounceTransition(userPhoto, 10, 500);
     }
 
     public void handleElementClicked() throws IOException {
-        interfaceController.showUserProfile(friend);
+        interfaceController.showProfileOf(friend);
+    }
+
+    public void handleElementEntered() {
+        hoverAnimation.play();
+    }
+
+    public void handleElementExited() {
+        hoverAnimation.stop();
+        userPhoto.setRotate(0);
     }
 
     @Override

@@ -10,38 +10,50 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.controller.list.NotificationCardController">
-   <children>
-      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <ImageView fx:id="notificationImage" fitHeight="70.0" fitWidth="70.0" onMouseEntered="#handleImageEntered" onMouseExited="#handleImageExited" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../media/icons/notification-info.png" />
-               </image>
-            </ImageView>
-         </children>
-      </HBox>
-      <ImageView fx:id="removeNotificationImage" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#handleImageClicked" onMouseEntered="#handleImageEntered" onMouseExited="#handleImageExited" pickOnBounds="true" preserveRatio="true" styleClass="delete-button" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@../../media/icons/notification-delete.png" />
-         </image>
-      </ImageView>
-      <VBox alignment="CENTER_LEFT" layoutX="105.0" layoutY="10.0" prefHeight="80.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Notification title" />
-            <TextFlow fx:id="messageTextFlow" prefHeight="60.0" prefWidth="270.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas dolor nulla. Aenean porttitor." wrappingWidth="258.7236328125" />
-               </children>
-            </TextFlow>
-         </children>
-      </VBox>
-      <Button fx:id="rejectButton" layoutX="426.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleRejectButton" prefHeight="40.0" prefWidth="40.0" styleClass="reject-button" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-      <Button fx:id="acceptButton" layoutX="354.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAcceptButton" prefHeight="40.0" prefWidth="40.0" styleClass="accept-button" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="60.0" />
-      <Text fx:id="dateText" layoutX="354.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message" text="DD/MM/YYYY HH:MM:SS" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-   </children>
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="460.0" styleClass="card"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="application.gui.controller.list.NotificationCardController">
    <stylesheets>
-      <URL value="@../../css/style.css" />
-      <URL value="@../../css/list/notification-card.css" />
+      <URL value="@../../css/style.css"/>
+      <URL value="@../../css/list/notification-card.css"/>
    </stylesheets>
+   <AnchorPane layoutX="5.0" styleClass="top-section" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" spacing="10.0" AnchorPane.leftAnchor="5.0"
+            AnchorPane.topAnchor="0.0">
+         <ImageView fx:id="notificationImage" fitHeight="40.0" fitWidth="40.0"
+                    onMouseEntered="#handleImageEntered" onMouseExited="#handleImageExited" pickOnBounds="true"
+                    preserveRatio="true">
+            <Image url="@../../media/icons/notification-info.png"/>
+         </ImageView>
+         <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-text"
+               text="Notification title"/>
+      </HBox>
+      <ImageView fx:id="removeNotificationImage" fitHeight="40.0" fitWidth="40.0"
+                 onMouseClicked="#handleImageClicked" onMouseEntered="#handleImageEntered"
+                 onMouseExited="#handleImageExited" pickOnBounds="true" preserveRatio="true"
+                 styleClass="delete-button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
+         <Image url="@../../media/icons/notification-delete.png"/>
+      </ImageView>
+      <VBox alignment="CENTER_RIGHT" layoutX="309.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0"
+            AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <Text fx:id="dateText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="date-text"
+               text="DD/MM/YYYY HH:MM:SS"/>
+      </VBox>
+   </AnchorPane>
+   <VBox alignment="CENTER_LEFT" layoutX="5.0" layoutY="40.0" prefHeight="40.0" prefWidth="300.0"
+         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="155.0"
+         AnchorPane.topAnchor="40.0">
+      <TextFlow fx:id="messageTextFlow" prefHeight="10.0" prefWidth="315.0">
+         <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message"
+               text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas dolor nulla. Aenean porttitor."
+               wrappingWidth="258.7236328125"/>
+      </TextFlow>
+   </VBox>
+   <Button fx:id="rejectButton" layoutX="426.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleRejectButton"
+           prefHeight="30.0" prefWidth="30.0" styleClass="reject-button" visible="false" AnchorPane.bottomAnchor="5.0"
+           AnchorPane.rightAnchor="5.0"/>
+   <Button fx:id="acceptButton" layoutX="354.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAcceptButton"
+           prefHeight="30.0" prefWidth="30.0" styleClass="accept-button" visible="false" AnchorPane.bottomAnchor="5.0"
+           AnchorPane.rightAnchor="40.0"/>
 </AnchorPane>

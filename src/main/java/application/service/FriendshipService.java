@@ -1,8 +1,8 @@
 package application.service;
 
-import application.model.Friendship;
+import application.models.Friendship;
 import application.utils.pair.DistinctPair;
-import application.model.exceptions.ValidationException;
+import application.models.exceptions.ValidationException;
 import application.repository.FriendshipRepository;
 import application.service.exceptions.AlreadyExistsException;
 import application.service.exceptions.NotFoundException;
@@ -43,6 +43,10 @@ public class FriendshipService {
         if (repository.delete(new DistinctPair<>(user1, user2)).isEmpty()) {
             throw new NotFoundException("There is no friendship between the specified users!");
         }
+    }
+
+    public void deleteFriendshipsOf(UUID user) {
+        repository.deleteFriendshipsOf(user);
     }
 
     public int size() {

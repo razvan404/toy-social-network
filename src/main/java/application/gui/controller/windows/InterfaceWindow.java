@@ -26,5 +26,6 @@ public abstract class InterfaceWindow extends ApplicationWindow {
         AnchorPane.setLeftAnchor(content, 0d);
         AnchorPane.setRightAnchor(content, 0d);
         AnchorPane.setTopAnchor(content, 0d);
+        content.requestFocus();
     }
 }

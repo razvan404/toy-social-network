@@ -1,8 +1,8 @@
 package application.service;
 
-import application.model.exceptions.ValidationException;
-import application.model.notification.Notification;
-import application.model.notification.NotificationType;
+import application.models.exceptions.ValidationException;
+import application.models.notification.Notification;
+import application.models.notification.NotificationType;
 import application.repository.NotificationsRepository;
 import application.service.exceptions.AlreadyExistsException;
 
@@ -26,12 +26,16 @@ public class NotificationService {
 
     public void save(UUID fromUserID, UUID toUserID, String title, String message,
                      NotificationType notificationType) throws ValidationException, AlreadyExistsException {
-        if (repository.save(Notification.of(fromUserID, toUserID, title, message, notificationType)).isPresent()) {
+        if (repository.save(Notification.create(fromUserID, toUserID, title, message, notificationType)).isPresent()) {
             throw new AlreadyExistsException("You have already sent a friend request to that user!");
         }
     }
 
     public Notification getFriendRequest(UUID firstUser, UUID secondUser) {
         return repository.getFriendRequest(firstUser, secondUser).orElse(null);
+    }
+
+    public void deleteNotificationsOf(UUID user) {
+        repository.deleteNotificationsOf(user);
     }
 }
